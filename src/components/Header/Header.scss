@@ -1,0 +1,119 @@
+@mixin button-font {
+    font-family:'Proxima Nova', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    color: white;
+}
+
+.header{
+    width: inherit;
+    display: flex;
+    height: 137px;
+    padding-left: 77px;
+    justify-content: space-around;
+    &__logo-block{
+        display: flex;
+        align-items: center;
+        width: 50%;
+        height: inherit;
+        background-color: #fff;
+    }
+
+    &__logo{
+        width: 38px;
+        height: 38px;
+    }
+    &__text-block{
+        margin-left: 20px;
+    }
+
+    &__title{
+        font-family: 'Proxima Nova', sans-serif;
+font-style: normal;
+font-weight: 800;
+font-size: 24px;
+line-height: 29px;
+letter-spacing: 0.01em;
+text-transform: uppercase;
+    }
+
+    &__subtitle{
+        font-family: 'Proxima Nova', sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+    &__login{
+        @include button-font;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        width: 100px;
+    height: 50px;
+    background-color: #FE5F1E;
+    }
+
+    &__buttons-block{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 30%;
+        padding-left: 10px; 
+    }
+
+}
+
+.cart{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px 0 15px;
+    width: 150px;
+    height: 50px;
+    background-color: #FE5F1E;
+    border-radius: 30px;
+
+    &__line{
+        margin: 0 15px 0 15px;
+        height: 25px;
+        width: 1px;
+        background-color: rgba(255, 255, 255, 0.418);
+    }
+    &__price{
+        max-width: 40%;
+        @include button-font;
+    }
+    &__count{
+        max-width: 40%;
+        @include button-font;
+        display: flex;
+        justify-content: space-between;
+       
+    }
+    &__icon{
+        margin-right: 5px;
+    }
+
+}
+
+@media screen and (max-width:1200px){
+    .header__buttons-block{
+        width: 60%;
+        justify-content: flex-end;
+    }
+    .header__login{
+        margin-right: 20px;
+    }
+}
+
+@media screen and (max-width:992px){
+    .header{
+        padding-left: 50px;
+    }
+}
