@@ -1,0 +1,133 @@
+@mixin button-font {
+    font-family: 'Proxima Nova', sans-serif;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 19px;
+text-align: center;
+letter-spacing: 0.5px;
+}
+@mixin sort-font {
+    font-family: "Proxima Nova", sans-serif;
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 17px;
+letter-spacing: 0.5px;
+}
+.filter-container{
+
+    height: 50px;
+    width: 100%;
+    background-color: #ff35;
+    display: flex;
+    justify-content: center;
+}
+
+.filter{
+    &__mobile-trigger{
+        @include button-font;
+        display: none;
+        width: 190px;
+        margin: auto;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        background-color: khaki;
+        border-radius: 25px;
+    }
+    &__filter-list{
+        @include button-font;
+        width: 60%;
+        list-style-type: none;
+        display: flex;
+    }
+    &__sort{
+        @include sort-font;
+        position: relative;
+        margin-left: auto;
+        background-color: #fff;
+        height: inherit;
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    &__sort-text{
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+    }
+    &__sort-type{
+        margin-left: 5px;
+        color: orange;
+        text-decoration: underline dashed;
+    }
+}
+.sort{
+    &__list{
+        width: 132px;
+        background-color: #fff;
+        position: absolute;
+        top: 70px;
+        border-radius: 10px;
+        list-style-type: none;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.233);
+    }
+    &__item{
+        font-weight: normal;
+        padding: 10px 0 10px 15px;
+        &--active{
+            font-weight: bold;
+            color: orange;
+            background-color:rgba(254, 95, 30, 0.05);
+        }
+    }
+}
+.filter-list__item{
+    padding: 14px 25px 14px 25px;
+    background-color: #F9F9F9;
+    border: 1px black solid;
+    border-radius: 30px;
+    margin: 0px 5px 0px 5px;
+    &--active{
+        color: white;
+        background-color: #000; // // // // //
+    }
+}
+
+
+@media screen and (max-width:768px){
+    .filter__mobile-trigger{
+        display: flex;
+    }
+    .filter-container{
+        height: 0px;
+        overflow: hidden;
+        flex-direction: column;
+        &--active{
+            padding-top: 15px;
+            height: auto;
+        }
+    }
+    .filter__filter-list{
+        margin: auto;
+        width: 190px;
+        flex-direction: column;
+    }
+    .filter-list__item{
+        margin: 7px 0 7px 0;
+    }
+    .filter__sort{
+        width: 100%;
+        justify-content: center;
+        padding: 25px 0 15px 0;
+    }
+    .sort__list{
+        width: inherit;
+        top: 50px;
+        text-align: center;
+        
+    }
+
+}

@@ -12,6 +12,7 @@ const Header = () => {
         </section>
 
         <section className="header__buttons-block">
+            <section className="header__close" > X </section>
             <section className="header__login">Login</section>
             <div className="cart">
                 <div className="cart__price">200$</div>

@@ -7,6 +7,9 @@ body{
   background-color: #FFDF8C;
 }
 .wrapper{
+  height: 2000px;
+  padding-right: 38px;
+  padding-left: 77px;
   margin: auto;
   width: 1200px;
   background-color: rosybrown;
@@ -14,6 +17,12 @@ body{
 
 @media screen and (max-width: 1200px) {
   .wrapper{
-    width: 92%;
+    width: 100%;
   }
 }
+@media screen and (max-width: 768px){
+  .wrapper{
+    padding: 0;
+  }
+}
+
