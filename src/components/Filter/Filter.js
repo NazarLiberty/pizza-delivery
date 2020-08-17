@@ -1,34 +1,34 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import './Filter.scss'
 
-const Filter = () => {
-    const sortButton = useRef(null);
-    useEffect(() => {
-        console.log(sortButton)
-    }, [])
+const Filter = ({ filterList, sortList,
+    currentSort, onToggleSort,
+    arrowClass, sortListClass,
+    onToggleFilter, mobileFilterClass }) => {
+
     return <>
-        <section className="filter__mobile-trigger">
-            Sort & filter
+        <section className="filter__mobile-trigger"
+            onClick={onToggleFilter}>
+            Настройки пошуку
     </section>
-        <section className="filter-container" >
+        <section className={mobileFilterClass} >
 
             <ul className="filter__filter-list">
-                <li className="filter-list__item">All</li>
-                <li className="filter-list__item">Meat</li>
-                <li className="filter-list__item">Vegitables</li>
-                <li className="filter-list__item filter-list__item--active">Spicy</li>
+                {filterList}
             </ul>
-            <section className="filter__sort">
-                <img src="./sort-arrow.svg" /> <p className="filter__sort-text">Sort by:
-            <span className="filter__sort-type"> popularity</span></p>
-                <ul className="sort__list">
-                    <li className="sort__item sort__item--active">popularity</li>
-                    <li className="sort__item">cost</li>
-                    <li className="sort__item">alphabet</li>
+            <section className="filter__sort " onClick={onToggleSort}>
+                <img src="./sort-arrow.svg" className={arrowClass} />
+                <p className="filter__sort-text">
+                    Сортувати за:
+                <span className="filter__sort-type" > {currentSort}</span></p>
+                <ul className={sortListClass}>
+                    {sortList}
                 </ul>
             </section>
         </section>
     </>
 }
 
-export default Filter 
+
+
+export default Filter

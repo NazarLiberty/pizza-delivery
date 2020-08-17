@@ -12,6 +12,17 @@
     display: flex;
     height: 137px;
     margin-bottom: 40px;
+    &__burger{
+        display: none;
+        position: fixed;
+        top: 30px;
+        right: 40px;
+        background-color: rgba(0, 0, 0, 0.699);
+        padding: 9px;
+        z-index: 99;
+        color: white;
+        border-radius: 10px;
+    }
     &__close{
         display: none;
     }
@@ -33,12 +44,12 @@
 
     &__title{
         font-family: 'Proxima Nova', sans-serif;
-font-style: normal;
-font-weight: 800;
-font-size: 24px;
-line-height: 29px;
-letter-spacing: 0.01em;
-text-transform: uppercase;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
     }
 
     &__subtitle{
@@ -51,6 +62,7 @@ text-transform: uppercase;
 
     &__login{
         @include button-font;
+        transition: ease-in-out .4s all;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -58,6 +70,12 @@ text-transform: uppercase;
         width: 100px;
     height: 50px;
     background-color: #FE5F1E;
+        &:hover{
+            cursor: pointer;
+        background-color: #fff;
+        color: #FE5F1E;  
+        border: 1px #FE5F1E solid;
+        }
     }
 
     &__buttons-block{
@@ -71,6 +89,8 @@ text-transform: uppercase;
 }
 
 .cart{
+    transition: ease-in-out .4s all;
+    @include button-font;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -80,7 +100,15 @@ text-transform: uppercase;
     height: 50px;
     background-color: #FE5F1E;
     border-radius: 30px;
-
+    &:hover{
+      cursor: pointer;
+      background-color: #fff;
+      color: #FE5F1E;  
+      border: 1px #FE5F1E solid;
+    }
+    &:hover .cart__line{
+        background-color: #FE5F1E;
+    }
     &__line{
         margin: 0 15px 0 15px;
         height: 25px;
@@ -89,11 +117,11 @@ text-transform: uppercase;
     }
     &__price{
         max-width: 40%;
-        @include button-font;
+
+        
     }
     &__count{
         max-width: 40%;
-        @include button-font;
         display: flex;
         justify-content: space-between;
        
@@ -115,6 +143,9 @@ text-transform: uppercase;
 }
 
 @media screen and (max-width:768px){
+    .header__burger{
+        display: block;
+    }
     .header__close{
         display: block;
         position: absolute;
@@ -124,11 +155,16 @@ text-transform: uppercase;
         font-weight: bold;
         font-family: monospace;
         color: white;
+        padding: 8px 15px;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.699);
     }
     .header__buttons-block{
+        transition: .5s all ease-in-out;
         height: 0px;
+        opacity: 0;
         overflow: hidden;
-        background-color: rgba(240, 134, 63, 0.582);
+        background-image: url('./HeaderAssets/mobile-background.jpg');
         position: fixed;
         top: 0px;
         left: 0px;
@@ -136,21 +172,47 @@ text-transform: uppercase;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        z-index: 999;
         &--active{
-            height: 150px; // // // // //
+            opacity: 1;
+            border-bottom: 2px rgba(0, 0, 0, 0.699) solid;
+            height: 180px; // // // // //
         }
     }
     .header__login{
         margin-left: 20px;
         margin-bottom: 10px;
         width: 150px;
+        background-color: rgba(0, 0, 0, 0.699);
+        &:hover{
+            background-color: #fff;
+            color: black;
+            border: 1px black solid;
+        }
+    }
+    .cart{
+        background-color: rgba(0, 0, 0, 0.699);
+        &:hover .cart__line{
+            background-color: black;
+        }
+        &:hover{
+            background-color: #fff;
+            color: black;
+            border: 1px black solid;
+        }
     }
     .header__logo-block{
-        width: 100%;
+        width: 70%;
+        justify-content: center;
     }
     .header{
         padding: 0 15px 0 15px;
         justify-content: center;
      
+    }
+}
+@media screen and (max-width:360px){
+    .header__burger{
+        right: 10px;
     }
 }

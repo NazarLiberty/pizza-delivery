@@ -1,0 +1,27 @@
+.pizza-list{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    &__container{
+    margin-top: 35px;
+    width: 100%;
+    background-color: #fff;
+    }
+    &__header{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+    margin-bottom: 35px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .pizza-list__header{
+        text-align: center;
+    }
+    .pizza-list{
+        justify-content: center;
+    }
+}
