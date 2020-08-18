@@ -1,0 +1,83 @@
+
+
+.cart-page{
+    width: 820px;
+    
+    margin: auto;
+    &__header{
+       display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 30px;
+    }
+    &__title{
+        display: flex;
+    }
+    &__cart-icon{
+        font-size: 30px;
+        margin-right: 17px;
+    }
+    &__text{
+        font-family: 'Proxima Nova', sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 27px;
+        &--title{
+            font-size: 32px;
+            line-height: 32px;
+        }
+        &--small_gray{
+            font-size: 16px;
+            color: #B6B6B6;
+            font-weight: normal;
+        }
+        &--thin{
+            font-weight: normal;
+        }
+        &--orange{
+            color: #FE5F1E;
+        }
+    }
+    &__trash-icon{
+        margin-right: 10px;
+        font-size: 16px;
+        color: #B6B6B6;
+    }
+
+    &__clear{
+        display: flex;
+        align-items: center;
+    }
+    &__info-block{
+        padding: 0 10px;
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__buttons-block{
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__nav-button{
+        width: 210px;
+        height: 55px;
+        border-radius: 30px;
+        background-color: #fff;
+        border: 1px solid #B6B6B6;
+        &--order{
+            background-color: #FE5F1E;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+}
+.cart-page__cart-list{
+    height: 440px;
+    overflow: auto;
+ 
+}
+

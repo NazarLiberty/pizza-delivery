@@ -60,9 +60,12 @@
         &:focus{
             outline: none;
         }
+        &:hover .pizza-item__order-count{
+            color: #EB5A1E;
+            background-color: #fff;
+        }
     }
     &__order-count{
-        display: none;
         width: 22px;
         height: 22px;
         background-color: #EB5A1E;
@@ -70,9 +73,7 @@
         text-align: center;
         color: white;
         line-height: 170%;
-        &--active{
-            display: block;
-        }
+
     }
     &__order-text{
         font-family: 'Proxima Nova', sans-serif;

@@ -34,6 +34,7 @@ const PizzaList = ({ pizzas, pizzasLoaded, filter, fetchError }) => {
     }
 
     useEffect(() => {
+
         pizzaService.getPizzas()
             .then((data) => pizzasLoaded(data))
             .catch((err) => fetchError(err))

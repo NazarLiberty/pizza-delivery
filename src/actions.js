@@ -58,6 +58,12 @@ const toggleFilterWindow = () => {
         type: 'MOBILE_FILTER_TOGGLE'
     }
 }
+const addPizzaToCart = (id) => {
+    return {
+        type: 'CART_PIZZA_ADD',
+        payload: id
+    }
+}
 export {
     fetchPizzas,
     fetchError,
@@ -68,4 +74,5 @@ export {
     toggleSortWindow,
     toggleMenuWindow,
     toggleFilterWindow,
+    addPizzaToCart,
 }

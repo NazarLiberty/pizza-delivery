@@ -3,17 +3,24 @@ import './Header.scss'
 import { connect } from 'react-redux'
 import { toggleMenuWindow } from '../../actions'
 
-const HeaderContainer = ({ onToggleMenu, mobileMenuActive }) => {
+const HeaderContainer = ({ onToggleMenu,
+    mobileMenuActive,
+    total, cartCount
+}) => {
     let mobileMenuClass = mobileMenuActive ?
         'header__buttons-block header__buttons-block--active' : 'header__buttons-block'
 
-
     return <Header
         onToggleMenu={onToggleMenu}
-        mobileMenuClass={mobileMenuClass} />
+        mobileMenuClass={mobileMenuClass}
+        total={total}
+        cartCount={cartCount} />
 }
 
-const Header = ({ onToggleMenu, mobileMenuClass }) => {
+const Header = ({ onToggleMenu,
+    mobileMenuClass, cartCount,
+    total,
+}) => {
     return <header className="header">
         <div className="header__burger"
             onClick={() => onToggleMenu()}>
@@ -31,16 +38,19 @@ const Header = ({ onToggleMenu, mobileMenuClass }) => {
             <section className="header__close" onClick={() => onToggleMenu()}> X </section>
             <section className="header__login">Увійти</section>
             <div className="cart">
-                <div className="cart__price">200$</div>
+                <div className="cart__price">{total}₴</div>
                 <div className="cart__line"></div>
-                <div className="cart__count"><i className="fas fa-cart-plus cart__icon"></i>102</div>
+                <div className="cart__count">
+                    <i class="fas fa-shopping-cart cart__icon"></i>
+                    {cartCount}
+                </div>
             </div>
         </section>
     </header>
 }
 
-const mapStateToProps = ({ mobileMenuActive }) => {
-    return { mobileMenuActive }
+const mapStateToProps = ({ mobileMenuActive, total, cartCount }) => {
+    return { mobileMenuActive, total, cartCount }
 }
 const mapDispatchToProps = (dispatch) => {
     return {

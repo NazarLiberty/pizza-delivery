@@ -6,7 +6,7 @@ const initState = {
     total: 0,
     filter: "all",
     sort: "popularity",
-    sortActive: true,
+    sortActive: false,
     mobileMenuActive: false,
     mobileFilterActive: false,
     error: null,
@@ -52,6 +52,32 @@ const sortItems = (listToSort, sortType) => {
     if (sortType === 'alphabet') return listToSort.sort((a, b) => a.name > b.name ? 1 : -1);
     return listToSort
 }
+
+const createCartPizza = (state, pizzaId) => {
+    const selectedPizza = state.filterPizzas.find(({ id }) => id === pizzaId)
+    return {
+        name: selectedPizza.name,
+        total: selectedPizza.totalPrice,
+        settings: selectedPizza.settings,
+        img: selectedPizza.img,
+        count: 1,
+        id: selectedPizza.id,
+    }
+}
+
+const increaseCartPizza = (state, newCartedPizza, actionAddPizzaId) => {
+    return state.cartPizzas.map((pizza) => {
+        if (pizza.id === actionAddPizzaId) return (
+            {
+                ...pizza,
+                count: ++pizza.count,
+                total: newCartedPizza.total + pizza.total
+            }
+        )
+        return pizza
+    })
+}
+
 const reducer = (state = initState, action) => {
     switch (action.type) {
         case 'FETCH_PIZZAS_SUCCES':
@@ -113,8 +139,29 @@ const reducer = (state = initState, action) => {
         case 'MOBILE_FILTER_TOGGLE':
             return {
                 ...state,
+                sortActive: false,
                 mobileFilterActive: !state.mobileFilterActive
             }
+        case 'CART_PIZZA_ADD':
+            const actionAddPizzaId = action.payload
+            const newCartedPizza = createCartPizza(state, actionAddPizzaId)
+            const isPizzaCarted = state.cartPizzas.find((pizza) => pizza.id === actionAddPizzaId)
+            let updatedCart = newCartedPizza
+            if (isPizzaCarted) updatedCart = increaseCartPizza(state, newCartedPizza, actionAddPizzaId)
+
+            const newCartCount = state.cartCount + 1
+            const newTotal = state.total + newCartedPizza.total
+
+            return {
+                ...state,
+                cartCount: newCartCount,
+                total: newTotal,
+                cartPizzas: [
+                    ...state.cartPizzas,
+                    updatedCart,
+                ],
+            }
+
         default: return state
     }
 }

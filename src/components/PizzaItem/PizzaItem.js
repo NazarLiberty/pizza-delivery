@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './PizzaItem.scss'
 import { connect } from 'react-redux'
-import { choosePizzaType, choosePizzaSize } from '../../actions'
+import { choosePizzaType, choosePizzaSize, addPizzaToCart } from '../../actions'
 
 
 
 const PizzaItemContainer = ({ name, id,
     price, img, thickness = 'thin',
     size = 'small', onChooseType,
-    onChooseSize }) => {
+    onChooseSize, onCartPizza,
+    cartPizzas }) => {
 
+
+    const getPizzaCount = (cartPizzas, pizzaId) => {
+        const currentPizza = cartPizzas.find(({ id }) => id === pizzaId)
+        if (currentPizza) return currentPizza.count
+        return null
+    }
 
     const thicknessSettings = (thickness) => {
         let thinClass = "pizza-settings__thickness pizza-settings__thickness--active"
@@ -44,19 +51,27 @@ const PizzaItemContainer = ({ name, id,
         )
     }
 
+    const count = getPizzaCount(cartPizzas, id)
+    const renderCount = count > 0 ?
+        <p className="pizza-item__order-count">{count}</p> : null
 
     return <PizzaItem name={name}
         price={price}
         img={img}
         thicknessSettingsRender={thicknessSettings(thickness)}
         sizeSettingsRender={sizeSettings(size)}
+        onCartPizza={onCartPizza}
+        id={id}
+        renderCount={renderCount}
     />
 }
 
 
-const PizzaItem = ({ name, price,
-    img, thicknessSettingsRender,
-    sizeSettingsRender }) => {
+const PizzaItem = ({ name,
+    price, img,
+    thicknessSettingsRender,
+    sizeSettingsRender, onCartPizza,
+    id, renderCount }) => {
 
     return <section className="pizza-item__container">
         <div className="pizza-item__image-block">
@@ -72,19 +87,25 @@ const PizzaItem = ({ name, price,
         </div>
         <div className="pizza-item__order">
             <p className="pizza-item__price pizza-item__text pizza-item__text--price">{price} ₴</p>
-            <button className="pizza-item__order-button">
+            <button onClick={() => onCartPizza(id)}
+                className="pizza-item__order-button">
                 <img src="./plus.png" className="pizza-item__plus" />
-                <p className="pizza-item__order-text"> Добавити </p>
-                <p className="pizza-item__order-count">0</p>
+                <p className="pizza-item__order-text">
+                    Добавити
+                </p>
+                {renderCount}
             </button>
         </div>
     </section>
 }
-
+const mapStateToProps = ({ cartPizzas }) => {
+    return { cartPizzas }
+}
 const mapDispatchToProps = (dispatch) => {
     return {
         onChooseType: (id, type) => dispatch(choosePizzaType(id, type)),
-        onChooseSize: (id, size) => dispatch(choosePizzaSize(id, size))
+        onChooseSize: (id, size) => dispatch(choosePizzaSize(id, size)),
+        onCartPizza: (id) => dispatch(addPizzaToCart(id))
     }
 }
-export default connect(null, mapDispatchToProps)(PizzaItemContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(PizzaItemContainer)
