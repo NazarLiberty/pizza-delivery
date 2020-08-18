@@ -13,7 +13,7 @@ const PizzaItemContainer = ({ name, id,
 
 
     const getPizzaCount = (cartPizzas, pizzaId) => {
-        const currentPizza = cartPizzas.find(({ id }) => id === pizzaId)
+        const currentPizza = cartPizzas.find(({ id }) => id.includes(pizzaId))
         if (currentPizza) return currentPizza.count
         return null
     }

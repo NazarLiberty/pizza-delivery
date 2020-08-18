@@ -55,19 +55,32 @@ const sortItems = (listToSort, sortType) => {
 
 const createCartPizza = (state, pizzaId) => {
     const selectedPizza = state.filterPizzas.find(({ id }) => id === pizzaId)
+    const { settings: { type, size }, id } = selectedPizza
+
     return {
         name: selectedPizza.name,
         total: selectedPizza.totalPrice,
         settings: selectedPizza.settings,
         img: selectedPizza.img,
         count: 1,
-        id: selectedPizza.id,
+        id: `${id}${type}${size}`,
     }
 }
+const isPizzaCartedChecker = (state, newCartedPizza) => {
+    const { id, settings: { type, size } } = newCartedPizza
 
-const increaseCartPizza = (state, newCartedPizza, actionAddPizzaId) => {
-    return state.cartPizzas.map((pizza) => {
-        if (pizza.id === actionAddPizzaId) return (
+    return state.cartPizzas
+        .find((pizza) => pizza.id === id
+            && pizza.settings.type === type
+            && pizza.settings.size === size)
+}
+
+const increaseCartPizza = (state, newCartedPizza) => {
+    const newCartCount = state.cartCount + 1
+    const newTotal = state.total + newCartedPizza.total
+
+    const updatedList = state.cartPizzas.map((pizza) => {
+        if (pizza.id === newCartedPizza.id) return (
             {
                 ...pizza,
                 count: ++pizza.count,
@@ -76,6 +89,12 @@ const increaseCartPizza = (state, newCartedPizza, actionAddPizzaId) => {
         )
         return pizza
     })
+    return {
+        ...state,
+        cartPizzas: updatedList,
+        total: newTotal,
+        cartCount: newCartCount,
+    }
 }
 
 const reducer = (state = initState, action) => {
@@ -145,21 +164,22 @@ const reducer = (state = initState, action) => {
         case 'CART_PIZZA_ADD':
             const actionAddPizzaId = action.payload
             const newCartedPizza = createCartPizza(state, actionAddPizzaId)
-            const isPizzaCarted = state.cartPizzas.find((pizza) => pizza.id === actionAddPizzaId)
-            let updatedCart = newCartedPizza
-            if (isPizzaCarted) updatedCart = increaseCartPizza(state, newCartedPizza, actionAddPizzaId)
+            const isPizzaCarted = isPizzaCartedChecker(state, newCartedPizza)
 
-            const newCartCount = state.cartCount + 1
-            const newTotal = state.total + newCartedPizza.total
+            if (isPizzaCarted) return increaseCartPizza(state, newCartedPizza)
 
-            return {
-                ...state,
-                cartCount: newCartCount,
-                total: newTotal,
-                cartPizzas: [
-                    ...state.cartPizzas,
-                    updatedCart,
-                ],
+            else {
+                const newCartCount = state.cartCount + 1
+                const newTotal = state.total + newCartedPizza.total
+                return {
+                    ...state,
+                    cartCount: newCartCount,
+                    total: newTotal,
+                    cartPizzas: [
+                        ...state.cartPizzas,
+                        newCartedPizza,
+                    ],
+                }
             }
 
         default: return state

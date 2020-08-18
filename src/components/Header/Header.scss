@@ -12,6 +12,7 @@
     display: flex;
     height: 137px;
     margin-bottom: 40px;
+    border-bottom: 1px rgba(223, 222, 222, 0.616) solid;
     &__burger{
         display: none;
         position: fixed;
@@ -31,7 +32,7 @@
         align-items: center;
         width: 50%;
         height: inherit;
-        background-color: #fff;
+      
     }
 
     &__logo{
@@ -84,6 +85,7 @@
         justify-content: space-around;
         width: 30%;
         margin-left: auto;
+ 
     }
 
 }

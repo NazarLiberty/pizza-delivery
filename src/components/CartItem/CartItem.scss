@@ -2,9 +2,9 @@
     display: flex;
     justify-content: space-between;
     padding: 30px 10px 30px 0px;
-    border-top: 1px #d4d4d4d0 solid;
+    border-top: 1px #dfdfdf73 solid;
     &__info-block{
-        padding-right: 20px;
+        width: 250px;
         display: flex;
         align-items: center;
 
@@ -28,10 +28,16 @@
         padding: 0 12px;
     }
     &__counter-icon{
+        transition: .15s all ease-in-out;
         font-size: 29px;
-        color: #EB5A1E;
+        color: #ff8800;
+        &:hover{
+            color: #ffc400;
+            cursor: pointer;
+        }
     }
     &__price{
+        width: 90px;
         margin-bottom: 6px;
         display: flex;
         justify-content: center;
@@ -42,9 +48,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
+       
     }
     &__close-icon{
+        transition: .4s all ease-in-out;
         font-size: 30px;
-        color: #D0D0D0
+        color: #D0D0D0;
+        &:hover{
+            color: black;
+            cursor: pointer;
+        }
     }
 }

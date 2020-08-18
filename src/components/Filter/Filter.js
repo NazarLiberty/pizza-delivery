@@ -1,6 +1,7 @@
 import React from 'react'
 import './Filter.scss'
 
+
 const Filter = ({ filterList, sortList,
     currentSort, onToggleSort,
     arrowClass, sortListClass,

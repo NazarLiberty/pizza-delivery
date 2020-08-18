@@ -2,24 +2,41 @@ import React from 'react'
 import './Header.scss'
 import { connect } from 'react-redux'
 import { toggleMenuWindow } from '../../actions'
+import { Link } from 'react-router-dom'
 
-const HeaderContainer = ({ onToggleMenu,
+const HeaderContainer = ({
+    simpleHeader,
+    onToggleMenu,
     mobileMenuActive,
     total, cartCount
 }) => {
+
     let mobileMenuClass = mobileMenuActive ?
         'header__buttons-block header__buttons-block--active' : 'header__buttons-block'
+
+    const cartButtonRender = simpleHeader ?
+        null : (
+            <div className="cart">
+                <div className="cart__price">{total}₴</div>
+                <div className="cart__line"></div>
+                <div className="cart__count">
+                    <i class="fas fa-shopping-cart cart__icon"></i>
+                    {cartCount}
+                </div>
+            </div>
+        )
 
     return <Header
         onToggleMenu={onToggleMenu}
         mobileMenuClass={mobileMenuClass}
-        total={total}
-        cartCount={cartCount} />
+        cartButtonRender={cartButtonRender}
+    />
 }
 
-const Header = ({ onToggleMenu,
-    mobileMenuClass, cartCount,
-    total,
+const Header = ({
+    cartButtonRender,
+    onToggleMenu,
+    mobileMenuClass,
 }) => {
     return <header className="header">
         <div className="header__burger"
@@ -37,14 +54,11 @@ const Header = ({ onToggleMenu,
         <section className={mobileMenuClass}>
             <section className="header__close" onClick={() => onToggleMenu()}> X </section>
             <section className="header__login">Увійти</section>
-            <div className="cart">
-                <div className="cart__price">{total}₴</div>
-                <div className="cart__line"></div>
-                <div className="cart__count">
-                    <i class="fas fa-shopping-cart cart__icon"></i>
-                    {cartCount}
-                </div>
-            </div>
+
+            <Link to="/cart">
+                {cartButtonRender}
+            </Link>
+
         </section>
     </header>
 }

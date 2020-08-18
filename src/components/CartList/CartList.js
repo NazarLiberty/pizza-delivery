@@ -1,16 +1,20 @@
 import React from 'react'
 import './CartList.scss'
 import CartItem from '../CartItem/CartItem'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 
-const Cart = () => {
+const CartList = ({ cartPizzas }) => {
+
     return <section className="cart-page">
         <section className="cart-page__header">
             <div className="cart-page__title">
                 <i class="fas fa-shopping-cart cart-page__cart-icon"></i>
-                <p className="cart-page__text cart-page__text--title">Корзина!</p>
+                <p className="cart-page__text cart-page__text--title">Корзина</p>
             </div>
             <div className="cart-page__clear">
+                <span className="cart-page__clear-underscore"></span>
                 <i class="far fa-trash-alt cart-page__trash-icon"></i>
                 <p className="cart-page__text cart-page__text--small_gray">
                     Очистити корзину
@@ -19,10 +23,10 @@ const Cart = () => {
         </section>
         <section className="cart-page__cart-list">
 
-            <CartItem />
-            <CartItem />
-            <CartItem />
 
+            {cartPizzas.map((pizza) => {
+                return <CartItem {...pizza} key={pizza.id} />
+            })}
 
         </section>
         <section className="cart-page__info-block">
@@ -36,11 +40,13 @@ const Cart = () => {
             </div>
         </section>
         <section className="cart-page__buttons-block">
-            <button className="cart-page__nav-button">
-                <span className="cart-page__text cart-page__text--small_gray">
-                    Повернутись назад
-                </span>
-            </button>
+            <Link to="/">
+                <button className="cart-page__nav-button">
+                    <span className="cart-page__text cart-page__text--small_gray">
+                        Повернутись назад
+                    </span>
+                </button>
+            </Link>
             <button className="cart-page__nav-button cart-page__nav-button--order">
                 Оплатити
             </button>
@@ -48,4 +54,8 @@ const Cart = () => {
     </section>
 }
 
-export default Cart
+const mapStateToProps = ({ cartPizzas }) => {
+    return { cartPizzas }
+}
+
+export default connect(mapStateToProps)(CartList)

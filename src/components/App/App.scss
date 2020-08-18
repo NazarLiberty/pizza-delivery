@@ -4,11 +4,15 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  & a:link{
+    text-decoration: none;
+  }
 }
 body{
   background-color: #FFDF8C;
 }
 .wrapper{
+  min-height: 100vh;
   padding-right: 38px;
   padding-left: 77px;
   margin: auto;

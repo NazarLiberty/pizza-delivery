@@ -1,6 +1,7 @@
 import React from 'react'
 import './Filter.scss'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import Filter from './Filter'
 import {
     changeFilter, changeSort,
