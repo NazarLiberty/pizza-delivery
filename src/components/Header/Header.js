@@ -20,7 +20,7 @@ const HeaderContainer = ({
                 <div className="cart__price">{total}₴</div>
                 <div className="cart__line"></div>
                 <div className="cart__count">
-                    <i class="fas fa-shopping-cart cart__icon"></i>
+                    <i className="fas fa-shopping-cart cart__icon"></i>
                     {cartCount}
                 </div>
             </div>
@@ -43,13 +43,18 @@ const Header = ({
             onClick={() => onToggleMenu()}>
             XXX
         </div>
+
+
         <section className="header__logo-block">
             <img src="./logo.svg" className="header__logo" />
-            <section className="header__text-block">
-                <h1 className="header__title">Pizza Delivery</h1>
-                <p className="header__subtitle">Найсмачніша піцца у нашому вимірі</p>
-            </section>
+            <Link to="/">
+                <section className="header__text-block">
+                    <h1 className="header__title">Pizza Delivery</h1>
+                    <p className="header__subtitle">Найсмачніша піцца у нашому вимірі</p>
+                </section>
+            </Link>
         </section>
+
 
         <section className={mobileMenuClass}>
             <section className="header__close" onClick={() => onToggleMenu()}> X </section>

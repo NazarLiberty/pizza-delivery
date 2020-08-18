@@ -2,8 +2,13 @@ import React from 'react'
 
 import CartList from '../CartList/CartList'
 import Header from '../Header/Header'
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux'
 
-const CartPage = () => {
+const CartPage = ({ emptyCart }) => {
+
+    if (emptyCart) return <Redirect to="/cart-empty" />
+
     return (
         <>
             <Header simpleHeader />
@@ -12,4 +17,10 @@ const CartPage = () => {
     )
 }
 
-export default CartPage
+const mapStateToProps = (state) => {
+    return {
+        emptyCart: state.cartPizzas.length === 0
+    }
+}
+
+export default connect(mapStateToProps)(CartPage)

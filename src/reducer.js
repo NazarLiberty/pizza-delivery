@@ -1,7 +1,10 @@
+import { act } from "react-dom/test-utils"
+
 const initState = {
     pizzas: [],
     cartPizzas: [],
     filterPizzas: [],
+    cartPizzasKind: [],
     cartCount: 0,
     total: 0,
     filter: "all",
@@ -9,6 +12,7 @@ const initState = {
     sortActive: false,
     mobileMenuActive: false,
     mobileFilterActive: false,
+    loader: true,
     error: null,
 }
 
@@ -64,6 +68,7 @@ const createCartPizza = (state, pizzaId) => {
         img: selectedPizza.img,
         count: 1,
         id: `${id}${type}${size}`,
+        initId: id,
     }
 }
 const isPizzaCartedChecker = (state, newCartedPizza) => {
@@ -94,16 +99,26 @@ const increaseCartPizza = (state, newCartedPizza) => {
         cartPizzas: updatedList,
         total: newTotal,
         cartCount: newCartCount,
+        cartPizzasKind: [
+            ...state.cartPizzasKind,
+            newCartedPizza.initId
+        ]
     }
 }
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
+        case 'FETCH_PIZZAS_REQUEST':
+            return {
+                ...state,
+                loader: true,
+            }
         case 'FETCH_PIZZAS_SUCCES':
             return {
                 ...state,
                 pizzas: action.payload,
-                filterPizzas: action.payload
+                filterPizzas: action.payload,
+                loader: false,
             }
         case 'FETCH_PIZZAS_FAILURE':
             return {
@@ -179,9 +194,14 @@ const reducer = (state = initState, action) => {
                         ...state.cartPizzas,
                         newCartedPizza,
                     ],
+                    cartPizzasKind: [
+                        ...state.cartPizzasKind,
+                        newCartedPizza.initId
+                    ]
                 }
             }
-
+        case 'CART_PIZZA_INCREASE':
+            console.log(action.payload)
         default: return state
     }
 }

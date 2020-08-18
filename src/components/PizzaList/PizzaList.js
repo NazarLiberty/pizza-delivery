@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import './PizzaList.scss'
 import { connect } from 'react-redux'
 
+import Loader from '../Loader/Loader'
 import PizzaItem from '../PizzaItem/PizzaItem'
 import PizzaService from '../../pizza-service'
-import { fetchPizzas, fetchError } from '../../actions'
+import { fetchPizzas, fetchError, fetchRequest } from '../../actions'
 
 
 const pizzaService = new PizzaService()
@@ -22,7 +23,12 @@ const renderPizzas = (pizzas) => {
         />
     })
 }
-const PizzaList = ({ pizzas, pizzasLoaded, filter, fetchError }) => {
+const PizzaList = ({ pizzas,
+    fetchRequest,
+    pizzasLoaded,
+    filter,
+    fetchError,
+    loader }) => {
 
     switch (filter) {
         case 'all': filter = 'Всі'; break;
@@ -34,12 +40,15 @@ const PizzaList = ({ pizzas, pizzasLoaded, filter, fetchError }) => {
     }
 
     useEffect(() => {
-
+        fetchRequest()
         pizzaService.getPizzas()
             .then((data) => pizzasLoaded(data))
             .catch((err) => fetchError(err))
 
     }, [])
+
+    if (loader) return <Loader />
+
     return <main className="pizza-list__container">
         <section className="pizza-list__header">
             {filter} піцци
@@ -56,13 +65,15 @@ const mapDispatchToProps = (dispatch) => {
     return {
         pizzasLoaded: (data) => dispatch(fetchPizzas(data)),
         fetchError: (err) => dispatch(fetchError(err)),
+        fetchRequest: () => dispatch(fetchRequest())
 
     }
 }
 const mapStateToProps = (state) => {
     return {
         pizzas: state.filterPizzas,
-        filter: state.filter
+        filter: state.filter,
+        loader: state.loader,
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(PizzaList)

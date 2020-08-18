@@ -10,6 +10,11 @@ const fetchError = (err) => {
         payload: err
     }
 }
+const fetchRequest = () => {
+    return {
+        type: 'FETCH_PIZZAS_REQUEST'
+    }
+}
 
 const choosePizzaType = (id, type) => {
     return {
@@ -64,7 +69,14 @@ const addPizzaToCart = (id) => {
         payload: id
     }
 }
+const increasePizza = (id) => {
+    return {
+        type: 'CART_PIZZA_INCREASE',
+        payload: id
+    }
+}
 export {
+    fetchRequest,
     fetchPizzas,
     fetchError,
     choosePizzaType,
@@ -75,4 +87,5 @@ export {
     toggleMenuWindow,
     toggleFilterWindow,
     addPizzaToCart,
+    increasePizza,
 }

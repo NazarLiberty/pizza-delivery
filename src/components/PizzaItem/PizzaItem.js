@@ -13,22 +13,22 @@ const PizzaItemContainer = ({ name, id,
 
 
     const getPizzaCount = (cartPizzas, pizzaId) => {
-        const currentPizza = cartPizzas.find(({ id }) => id.includes(pizzaId))
-        if (currentPizza) return currentPizza.count
+        const currentPizza = cartPizzas.filter((id) => id === pizzaId)
+        if (currentPizza.length > 0) return currentPizza.length
         return null
     }
 
     const thicknessSettings = (thickness) => {
-        let thinClass = "pizza-settings__thickness pizza-settings__thickness--active"
+        let thinClass = "pizza-settings__thickness"
         let classicClass = "pizza-settings__thickness"
-        if (thickness === 'classic') {
-            classicClass += ' pizza-settings__thickness--active'
-            thinClass = " pizza-settings__thickness"
-        }
+
+        console.log(thickness, id)
+        if (thickness === 'classic') classicClass += ' pizza-settings__thickness--active'
+        if (thickness === 'thin') thinClass += ' pizza-settings__thickness--active'
         return (
             <>
                 <div className={thinClass} onClick={() => onChooseType(id, 'thin')}>тонка</div>
-                <div className={classicClass} onClick={() => onChooseType(id, 'classic')}>класична</div>
+                <div className={classicClass} onClick={() => onChooseType(id, 'classic')}>стандартна</div>
             </>
         )
     }
@@ -98,7 +98,7 @@ const PizzaItem = ({ name,
         </div>
     </section>
 }
-const mapStateToProps = ({ cartPizzas }) => {
+const mapStateToProps = ({ cartPizzasKind: cartPizzas }) => {
     return { cartPizzas }
 }
 const mapDispatchToProps = (dispatch) => {
