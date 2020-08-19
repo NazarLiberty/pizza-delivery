@@ -47,3 +47,17 @@
         }
     }
 }
+
+@media screen and (max-width:768px){
+.cart-failure{
+    width: 100%;
+    }
+}
+@media screen and (max-width:400px){
+    .cart-failure__img{
+        width: 100%;
+        }
+        .cart-failure__title{
+            font-size: 30px;
+        }
+    }

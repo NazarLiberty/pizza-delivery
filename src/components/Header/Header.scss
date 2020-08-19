@@ -213,6 +213,12 @@
      
     }
 }
+@media screen and (max-width:578px){
+    .header{
+        justify-content: flex-start;
+    }
+}
+
 @media screen and (max-width:360px){
     .header__burger{
         right: 10px;
