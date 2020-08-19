@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Loader from '../Loader/Loader'
 import PizzaItem from '../PizzaItem/PizzaItem'
 import PizzaService from '../../pizza-service'
-import { fetchPizzas, fetchError, fetchRequest } from '../../actions'
+import { fetchPizzas, fetchError, fetchRequest, toggleMenuWindow } from '../../actions'
 
 
 const pizzaService = new PizzaService()
@@ -24,11 +24,13 @@ const renderPizzas = (pizzas) => {
     })
 }
 const PizzaList = ({ pizzas,
+    sort,
     fetchRequest,
     pizzasLoaded,
     filter,
     fetchError,
-    loader }) => {
+    loader,
+    onToggleMenu, }) => {
 
     switch (filter) {
         case 'all': filter = 'Всі'; break;
@@ -44,8 +46,7 @@ const PizzaList = ({ pizzas,
         pizzaService.getPizzas()
             .then((data) => pizzasLoaded(data))
             .catch((err) => fetchError(err))
-
-    }, [])
+    }, [filter, sort])
 
     if (loader) return <Loader />
 
@@ -65,15 +66,18 @@ const mapDispatchToProps = (dispatch) => {
     return {
         pizzasLoaded: (data) => dispatch(fetchPizzas(data)),
         fetchError: (err) => dispatch(fetchError(err)),
-        fetchRequest: () => dispatch(fetchRequest())
+        fetchRequest: () => dispatch(fetchRequest()),
+        onToggleMenu: () => dispatch(toggleMenuWindow())
 
     }
 }
 const mapStateToProps = (state) => {
     return {
         pizzas: state.filterPizzas,
+        filterPizzas: state.filterPizzas,
         filter: state.filter,
         loader: state.loader,
+        sort: state.sort,
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(PizzaList)

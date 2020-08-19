@@ -22,7 +22,6 @@ const PizzaItemContainer = ({ name, id,
         let thinClass = "pizza-settings__thickness"
         let classicClass = "pizza-settings__thickness"
 
-        console.log(thickness, id)
         if (thickness === 'classic') classicClass += ' pizza-settings__thickness--active'
         if (thickness === 'thin') thinClass += ' pizza-settings__thickness--active'
         return (

@@ -1,7 +1,7 @@
 const fetchPizzas = (pizzas) => {
     return {
         type: 'FETCH_PIZZAS_SUCCES',
-        payload: pizzas,
+        payload: pizzas
     }
 }
 const fetchError = (err) => {

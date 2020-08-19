@@ -77,7 +77,7 @@ export default class PizzaService {
             price: 95,
             totalPrice: 95,
             id: 4,
-            class: 'spicy',
+            class: ['spicy', 'meat'],
             popularity: 0.6
         },
     ]

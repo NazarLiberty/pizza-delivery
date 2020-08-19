@@ -1,4 +1,3 @@
-import { act } from "react-dom/test-utils"
 
 const initState = {
     pizzas: [],
@@ -47,7 +46,8 @@ const changeSizeSettings = (state, id, size) => {
 }
 
 const filterItems = (listToFilter, filter) => {
-    return listToFilter.filter((pizza) => pizza.class === filter)
+    if (filter === 'all') return listToFilter
+    return listToFilter.filter((pizza) => pizza.class.includes(filter))
 }
 
 const sortItems = (listToSort, sortType) => {
@@ -108,16 +108,21 @@ const increaseCartPizza = (state, newCartedPizza) => {
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
+
         case 'FETCH_PIZZAS_REQUEST':
             return {
                 ...state,
                 loader: true,
             }
         case 'FETCH_PIZZAS_SUCCES':
+            const pizzas = action.payload
+            const filterPizzasList = filterItems(pizzas, state.filter)
+            const sortedAndFilteredList = sortItems(filterPizzasList, state.sort)
+
             return {
                 ...state,
-                pizzas: action.payload,
-                filterPizzas: action.payload,
+                pizzas: pizzas,
+                filterPizzas: sortedAndFilteredList,
                 loader: false,
             }
         case 'FETCH_PIZZAS_FAILURE':
@@ -144,8 +149,7 @@ const reducer = (state = initState, action) => {
         case 'FILTER_CHANGE':
             const pizzaClass = action.payload
             let listToFilter = state.pizzas
-            let filteredList = listToFilter
-            if (pizzaClass !== 'all') filteredList = filterItems(listToFilter, pizzaClass)
+            const filteredList = filterItems(listToFilter, pizzaClass)
             return {
                 ...state,
                 filter: pizzaClass,

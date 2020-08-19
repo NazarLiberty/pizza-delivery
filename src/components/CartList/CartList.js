@@ -1,7 +1,7 @@
 import React from 'react'
 import './CartList.scss'
 import CartItem from '../CartItem/CartItem'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 

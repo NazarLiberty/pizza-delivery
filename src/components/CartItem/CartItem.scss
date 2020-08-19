@@ -60,3 +60,21 @@
         }
     }
 }
+
+@media screen and (max-width: 578px){
+    .cart-item__info-block{
+        width: 100%;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+    }
+    .cart-item{
+        padding-right: 0;
+        flex-wrap: wrap;
+    }
+    .cart-item__counter-block{
+        justify-content: flex-start;
+    }
+}
