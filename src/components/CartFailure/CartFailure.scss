@@ -30,6 +30,7 @@
         width: 350px;
     }
     &__back{
+        transition: .5s all ease;
         margin-top: 15px;
         border: 0;
         border-radius: 30px;
@@ -42,6 +43,12 @@
         font-size: 16px;
         line-height: 19px;
         color: #fff;
+        &:hover{
+            cursor: pointer;
+            background-color: #fff;
+            color: #282828;
+            border: 1px solid #282828;
+        }
         &:focus{
             outline: none;
         }
