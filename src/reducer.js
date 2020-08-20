@@ -3,6 +3,7 @@ const initState = {
     pizzas: [],
     cartPizzas: [],
     filterPizzas: [],
+    pizzasSettingsMemory: [],
     cartPizzasKind: [],
     cartCount: 0,
     total: 0,
@@ -20,10 +21,12 @@ const changeThicknessType = (state, id, type) => {
         if (pizza.id === id) {
             const { size } = pizza.settings
             const { markup, price } = pizza
+            const newId = `${pizza.initialId + type + size}`
             return {
                 ...pizza,
                 totalPrice: price + markup[type] + markup[size],
-                settings: { type: type, size: size }
+                settings: { type: type, size: size },
+                id: newId
             }
         }
         return pizza
@@ -35,10 +38,12 @@ const changeSizeSettings = (state, id, size) => {
         if (pizza.id === id) {
             const { type } = pizza.settings
             const { markup, price } = pizza
+            const newId = `${pizza.initialId + type + size}`
             return {
                 ...pizza,
                 totalPrice: price + markup[type] + markup[size],
-                settings: { type: type, size: size }
+                settings: { type: type, size: size },
+                id: newId
             }
         }
         return pizza
@@ -46,8 +51,17 @@ const changeSizeSettings = (state, id, size) => {
 }
 
 const filterItems = (listToFilter, filter) => {
-    if (filter === 'all') return listToFilter
-    return listToFilter.filter((pizza) => pizza.class.includes(filter))
+    const uniquePizzaId = listToFilter.map((item) => {
+        let { id, settings: { type, size } } = item
+        let newId = `${id + type + size}`
+        return {
+            ...item,
+            id: newId,
+            initialId: id,
+        }
+    })
+    if (filter === 'all') return uniquePizzaId
+    return uniquePizzaId.filter((pizza) => pizza.class.includes(filter))
 }
 
 const sortItems = (listToSort, sortType) => {
@@ -58,8 +72,9 @@ const sortItems = (listToSort, sortType) => {
 }
 
 const createCartPizza = (state, pizzaId) => {
-    const selectedPizza = state.filterPizzas.find(({ id }) => id === pizzaId)
-    const { settings: { type, size }, id } = selectedPizza
+
+    let selectedPizza = state.pizzasSettingsMemory.find(({ id }) => id === pizzaId)
+    if (!selectedPizza) selectedPizza = state.filterPizzas.find(({ id }) => id === pizzaId)
 
     return {
         name: selectedPizza.name,
@@ -67,8 +82,7 @@ const createCartPizza = (state, pizzaId) => {
         settings: selectedPizza.settings,
         img: selectedPizza.img,
         count: 1,
-        id: `${id}${type}${size}`,
-        initId: id,
+        id: selectedPizza.id,
     }
 }
 const isPizzaCartedChecker = (state, newCartedPizza) => {
@@ -80,20 +94,20 @@ const isPizzaCartedChecker = (state, newCartedPizza) => {
             && pizza.settings.size === size)
 }
 
-const increaseCartPizza = (state, newCartedPizza) => {
+const increaseCartPizza = (state, cartedPizzaId, newPizza) => {
     const newCartCount = state.cartCount + 1
-    const newTotal = state.total + newCartedPizza.total
-
+    const newTotal = state.total + newPizza.total
     const updatedList = state.cartPizzas.map((pizza) => {
-        if (pizza.id === newCartedPizza.id) return (
+        if (pizza.id === cartedPizzaId) return (
             {
                 ...pizza,
                 count: ++pizza.count,
-                total: newCartedPizza.total + pizza.total
+                total: newPizza.total + pizza.total
             }
         )
         return pizza
     })
+
     return {
         ...state,
         cartPizzas: updatedList,
@@ -101,12 +115,55 @@ const increaseCartPizza = (state, newCartedPizza) => {
         cartCount: newCartCount,
         cartPizzasKind: [
             ...state.cartPizzasKind,
-            newCartedPizza.initId
+            newPizza.name
         ]
     }
 }
 
+const decreaseCartPizza = (state, cartedPizzaId, newPizza) => {
+    const newCartCount = state.cartCount - 1
+    const newTotal = state.total - newPizza.total
+
+    const updatedList = state.cartPizzas
+        .map((pizza) => {
+            if (pizza.id === cartedPizzaId) {
+                return {
+                    ...pizza,
+                    count: --pizza.count,
+                    total: pizza.total - newPizza.total
+                }
+            }
+            return pizza
+        })
+    const newPizzaKindList = state.cartPizzasKind.map(e => e)
+    const indexOfPizzaKind = state.cartPizzasKind.lastIndexOf(newPizza.name)
+    if (indexOfPizzaKind > -1) newPizzaKindList.splice(indexOfPizzaKind, 1)
+
+    return {
+        ...state,
+        cartPizzas: updatedList,
+        cartCount: newCartCount,
+        total: newTotal,
+        cartPizzasKind: newPizzaKindList
+    }
+}
+
+const deletePizza = (state, deletedPizza, deletedPizzaId) => {
+    const newList = state.cartPizzas.filter(({ id }) => id !== deletedPizzaId)
+    const newPizzaKindList = state.cartPizzasKind.map(e => e)
+    const indexOfPizzaKind = state.cartPizzasKind.indexOf(deletedPizza.name)
+    if (indexOfPizzaKind > -1) newPizzaKindList.splice(indexOfPizzaKind, deletedPizza.count)
+
+    return {
+        ...state,
+        cartPizzas: newList,
+        total: state.total - deletedPizza.total,
+        cartCount: state.cartCount - deletedPizza.count,
+        cartPizzasKind: newPizzaKindList,
+    }
+}
 const reducer = (state = initState, action) => {
+
     switch (action.type) {
 
         case 'FETCH_PIZZAS_REQUEST':
@@ -133,19 +190,21 @@ const reducer = (state = initState, action) => {
         case 'TYPE_PIZZA_CHOOSE':
             const { id: pizzaIdType } = action.payload
             const { type } = action.payload
-            const updatedType = changeThicknessType(state, pizzaIdType, type)
+            const updatedTypeList = changeThicknessType(state, pizzaIdType, type)
+
             return {
                 ...state,
-                filterPizzas: updatedType
+                filterPizzas: updatedTypeList,
             }
         case 'SIZE_PIZZA_CHOOSE':
             const { id: pizzaIdSize } = action.payload
             const { size } = action.payload
-            const updatedSize = changeSizeSettings(state, pizzaIdSize, size)
+            const updatedSizeList = changeSizeSettings(state, pizzaIdSize, size)
             return {
                 ...state,
-                filterPizzas: updatedSize
+                filterPizzas: updatedSizeList,
             }
+
         case 'FILTER_CHANGE':
             const pizzaClass = action.payload
             let listToFilter = state.pizzas
@@ -184,8 +243,9 @@ const reducer = (state = initState, action) => {
             const actionAddPizzaId = action.payload
             const newCartedPizza = createCartPizza(state, actionAddPizzaId)
             const isPizzaCarted = isPizzaCartedChecker(state, newCartedPizza)
+            const newPizzaSettings = state.filterPizzas.find(({ id }) => id === actionAddPizzaId)
 
-            if (isPizzaCarted) return increaseCartPizza(state, newCartedPizza)
+            if (isPizzaCarted) return increaseCartPizza(state, actionAddPizzaId, newCartedPizza)
 
             else {
                 const newCartCount = state.cartCount + 1
@@ -200,12 +260,46 @@ const reducer = (state = initState, action) => {
                     ],
                     cartPizzasKind: [
                         ...state.cartPizzasKind,
-                        newCartedPizza.initId
+                        newCartedPizza.name
+                    ],
+                    pizzasSettingsMemory: [
+                        ...state.pizzasSettingsMemory,
+                        newPizzaSettings
                     ]
                 }
             }
         case 'CART_PIZZA_INCREASE':
-            console.log(action.payload)
+            const increasePizzaId = action.payload
+
+            const newPizza = createCartPizza(state, increasePizzaId)
+            return increaseCartPizza(state, increasePizzaId, newPizza)
+
+        case 'CART_PIZZA_DECREASE': {
+            const decreasePizzaId = action.payload
+            const newPizza = createCartPizza(state, decreasePizzaId)
+            const decreasedPizza = state.cartPizzas.find(({ id }) => id === decreasePizzaId)
+
+            if (decreasedPizza.count <= 1) return deletePizza(state, decreasedPizza, decreasePizzaId)
+            return decreaseCartPizza(state, decreasePizzaId, newPizza)
+        }
+
+        case 'CART_PIZZA_DELETE': {
+            const deletedPizzaId = action.payload;
+            const deletedPizza = state.cartPizzas.find(({ id }) => id === deletedPizzaId)
+
+            return deletePizza(state, deletedPizza, deletedPizzaId)
+        }
+
+        case 'CART_CLEAR': {
+            return {
+                ...state,
+                cartCount: 0,
+                total: 0,
+                cartPizzasKind: [],
+                pizzasSettingsMemory: [],
+                cartPizzas: [],
+            }
+        }
         default: return state
     }
 }

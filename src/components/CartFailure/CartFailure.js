@@ -1,5 +1,6 @@
 import React from 'react'
 import './CartFailure.scss'
+import { Link } from 'react-router-dom'
 
 const CartFailure = ({ logout }) => {
 
@@ -18,7 +19,11 @@ const CartFailure = ({ logout }) => {
             {subtitle}
         </p>
         <img src="empty-cart.png" className="cart-failure__img" />
-        <button className="cart-failure__back">Повернутися назад</button>
+
+        <Link to="/">
+            <button className="cart-failure__back">Повернутися назад</button>
+        </Link>
+
     </div>
 }
 

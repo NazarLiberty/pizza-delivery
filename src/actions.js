@@ -16,22 +16,24 @@ const fetchRequest = () => {
     }
 }
 
-const choosePizzaType = (id, type) => {
+const choosePizzaType = (id, type, name) => {
     return {
         type: 'TYPE_PIZZA_CHOOSE',
         payload: {
             id,
-            type
+            type,
+            name,
         }
     }
 }
 
-const choosePizzaSize = (id, size) => {
+const choosePizzaSize = (id, size, name) => {
     return {
         type: 'SIZE_PIZZA_CHOOSE',
         payload: {
             id,
-            size
+            size,
+            name
         }
     }
 }
@@ -75,6 +77,24 @@ const increasePizza = (id) => {
         payload: id
     }
 }
+const decreasePizza = (id) => {
+    return {
+        type: 'CART_PIZZA_DECREASE',
+        payload: id
+    }
+}
+
+const deletePizza = (id) => {
+    return {
+        type: 'CART_PIZZA_DELETE',
+        payload: id,
+    }
+}
+const clearCart = () => {
+    return {
+        type: 'CART_CLEAR'
+    }
+}
 export {
     fetchRequest,
     fetchPizzas,
@@ -88,4 +108,7 @@ export {
     toggleFilterWindow,
     addPizzaToCart,
     increasePizza,
+    decreasePizza,
+    deletePizza,
+    clearCart,
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import './CartItem.scss'
-import { increasePizza } from '../../actions';
+import { increasePizza, decreasePizza, deletePizza } from '../../actions';
 import { connect } from 'react-redux';
 
 const CartItem = ({
@@ -8,7 +8,9 @@ const CartItem = ({
     img, id,
     settings,
     count,
-    onIncrease, }) => {
+    onIncrease,
+    onDecrease,
+    onDelete, }) => {
 
 
     let size = settings.size
@@ -25,7 +27,6 @@ const CartItem = ({
         case 'large': size = '40 см.'; break;
         default: break;
     }
-
     return (
         <div className="cart-item">
             <div className="cart-item__info-block">
@@ -38,7 +39,7 @@ const CartItem = ({
                 </div>
             </div>
             <div className="cart-item__counter-block">
-                <i
+                <i onClick={() => onDecrease(id)}
                     className="fas fa-minus-circle cart-item__counter-icon"></i>
                 <p className="cart-page__text cart-item__count">{count}</p>
                 <i onClick={() => onIncrease(id)}
@@ -48,7 +49,8 @@ const CartItem = ({
                 <p className="cart-page__text">{total} ₴</p>
             </div>
             <div className="cart-item__close">
-                <i className="far fa-times-circle cart-item__close-icon"></i>
+                <i onClick={() => onDelete(id)}
+                    className="far fa-times-circle cart-item__close-icon"></i>
             </div>
         </div>
     )
@@ -56,7 +58,9 @@ const CartItem = ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onIncrease: (id) => dispatch(increasePizza(id))
+        onIncrease: (id) => dispatch(increasePizza(id)),
+        onDecrease: (id) => dispatch(decreasePizza(id)),
+        onDelete: (id) => dispatch(deletePizza(id))
     }
 }
 

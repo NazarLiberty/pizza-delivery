@@ -3,9 +3,11 @@ import './CartList.scss'
 import CartItem from '../CartItem/CartItem'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { clearCart } from '../../actions'
 
 
-const CartList = ({ cartPizzas, total, cartCount }) => {
+const CartList = ({ cartPizzas, total,
+    cartCount, onClearCart }) => {
 
     const renderCartPizzas = (cartPizzas) => {
         return cartPizzas.map((pizza) => {
@@ -19,7 +21,8 @@ const CartList = ({ cartPizzas, total, cartCount }) => {
                 <i className="fas fa-shopping-cart cart-page__cart-icon"></i>
                 <p className="cart-page__text cart-page__text--title">Корзина</p>
             </div>
-            <div className="cart-page__clear">
+            <div onClick={() => onClearCart()}
+                className="cart-page__clear">
                 <span className="cart-page__clear-underscore"></span>
                 <i className="far fa-trash-alt cart-page__trash-icon"></i>
                 <p className="cart-page__text cart-page__text--small_gray">
@@ -57,8 +60,13 @@ const CartList = ({ cartPizzas, total, cartCount }) => {
     </section>
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onClearCart: () => dispatch(clearCart())
+    }
+}
 const mapStateToProps = ({ cartPizzas, total, cartCount }) => {
     return { cartPizzas, total, cartCount }
 }
 
-export default connect(mapStateToProps)(CartList)
+export default connect(mapStateToProps, mapDispatchToProps)(CartList)

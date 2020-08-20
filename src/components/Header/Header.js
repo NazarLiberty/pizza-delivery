@@ -16,7 +16,7 @@ const HeaderContainer = ({
 
     const cartButtonRender = simpleHeader ?
         null : (
-            <div className="cart">
+            <div className="cart" onClick={() => onToggleMenu()}>
                 <div className="cart__price">{total}₴</div>
                 <div className="cart__line"></div>
                 <div className="cart__count">
