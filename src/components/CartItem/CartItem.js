@@ -5,13 +5,12 @@ import { connect } from 'react-redux';
 
 const CartItem = ({
     name, total,
-    img, id,
+    img,
     settings,
-    count,
+    count, id,
     onIncrease,
     onDecrease,
     onDelete, }) => {
-
 
     let size = settings.size
     let type = settings.type

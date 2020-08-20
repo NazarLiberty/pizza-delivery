@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => {
         onClearCart: () => dispatch(clearCart())
     }
 }
-const mapStateToProps = ({ cartPizzas, total, cartCount }) => {
+const mapStateToProps = ({ shoppingCart: { cartPizzas, total, cartCount } }) => {
     return { cartPizzas, total, cartCount }
 }
 

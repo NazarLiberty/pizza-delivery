@@ -17,9 +17,9 @@ const CartPage = ({ emptyCart }) => {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ shoppingCart: { cartPizzas } }) => {
     return {
-        emptyCart: state.cartPizzas.length === 0
+        emptyCart: cartPizzas.length === 0
     }
 }
 

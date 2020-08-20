@@ -10,7 +10,6 @@ const HeaderContainer = ({
     mobileMenuActive,
     total, cartCount
 }) => {
-
     let mobileMenuClass = mobileMenuActive ?
         'header__buttons-block header__buttons-block--active' : 'header__buttons-block'
 
@@ -68,7 +67,7 @@ const Header = ({
     </header>
 }
 
-const mapStateToProps = ({ mobileMenuActive, total, cartCount }) => {
+const mapStateToProps = ({ shoppingCart: { total, cartCount }, mobileMenuActive }) => {
     return { mobileMenuActive, total, cartCount }
 }
 const mapDispatchToProps = (dispatch) => {

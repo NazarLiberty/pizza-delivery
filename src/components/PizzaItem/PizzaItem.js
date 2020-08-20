@@ -97,7 +97,7 @@ const PizzaItem = ({ name,
         </div>
     </section>
 }
-const mapStateToProps = ({ cartPizzasKind: cartPizzasNameList }) => {
+const mapStateToProps = ({ shoppingCart: { cartPizzasKind: cartPizzasNameList } }) => {
     return { cartPizzasNameList }
 }
 const mapDispatchToProps = (dispatch) => {

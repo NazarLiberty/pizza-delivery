@@ -20,6 +20,7 @@ const renderPizzas = (pizzas) => {
             id={pizza.id}
             thickness={pizza.settings.type}
             size={pizza.settings.size}
+            initialId={pizza.initialId}
         />
     })
 }
@@ -29,9 +30,8 @@ const PizzaList = ({ pizzas,
     pizzasLoaded,
     filter,
     fetchError,
-    loader,
-    onToggleMenu, }) => {
-
+    loader, }) => {
+    console.log(pizzas)
     switch (filter) {
         case 'all': filter = 'Всі'; break;
         case 'meat': filter = "М'ясні"; break;
@@ -67,17 +67,12 @@ const mapDispatchToProps = (dispatch) => {
         pizzasLoaded: (data) => dispatch(fetchPizzas(data)),
         fetchError: (err) => dispatch(fetchError(err)),
         fetchRequest: () => dispatch(fetchRequest()),
-        onToggleMenu: () => dispatch(toggleMenuWindow())
 
     }
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ pizzaList: { filterPizzas: pizzas, filter, loader, sort } }) => {
     return {
-        pizzas: state.filterPizzas,
-        filterPizzas: state.filterPizzas,
-        filter: state.filter,
-        loader: state.loader,
-        sort: state.sort,
+        pizzas, filter, loader, sort
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(PizzaList)

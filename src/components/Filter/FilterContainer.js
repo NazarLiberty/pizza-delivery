@@ -1,7 +1,6 @@
 import React from 'react'
 import './Filter.scss'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import Filter from './Filter'
 import {
     changeFilter, changeSort,
@@ -89,7 +88,7 @@ const FilterContainer = ({ filter, sort,
         mobileFilterClass={mobileFilterClass} />
 }
 
-const mapStateToProps = ({ filter, sort, sortActive, mobileFilterActive }) => {
+const mapStateToProps = ({ pizzaList: { filter, sort, sortActive, mobileFilterActive } }) => {
     return { filter, sort, sortActive, mobileFilterActive }
 }
 const mapDispatchToProps = (dispatch) => {
