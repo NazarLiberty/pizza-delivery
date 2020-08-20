@@ -3,7 +3,7 @@ import './PizzaList.scss'
 import { connect } from 'react-redux'
 
 import Loader from '../Loader/Loader'
-import PizzaItem from '../PizzaItem/PizzaItem'
+import PizzaItem from '../PizzaItem/PizzaItemContainer'
 import PizzaService from '../../pizza-service'
 import { fetchPizzas, fetchError, fetchRequest, toggleMenuWindow } from '../../actions'
 
@@ -31,7 +31,7 @@ const PizzaList = ({ pizzas,
     filter,
     fetchError,
     loader, }) => {
-    console.log(pizzas)
+
     switch (filter) {
         case 'all': filter = 'Всі'; break;
         case 'meat': filter = "М'ясні"; break;

@@ -35,7 +35,7 @@ const changeSizeSettings = (state, id, size) => {
 }
 
 const filterItems = (listToFilter, filter) => {
-    console.log(listToFilter)
+
     const uniquePizzaId = listToFilter.map((item) => {
         let { id, settings: { type, size } } = item
         let newId = `${id + type + size}`
@@ -73,7 +73,7 @@ const updatePizzaList = (state, action) => {
             const { sort, filter } = state.pizzaList
             const filterPizzasList = filterItems(pizzas, filter)
             const sortedAndFilteredList = sortItems(filterPizzasList, sort)
-            console.log(pizzas)
+
             return {
                 ...state.pizzaList,
                 pizzas: pizzas,
@@ -122,15 +122,17 @@ const updatePizzaList = (state, action) => {
                 filterPizzas: sortedItems
             }
         case 'SORT_TOGGLE':
+            const { sortActive } = state.pizzaList
             return {
                 ...state.pizzaList,
-                sortActive: !state.sortActive
+                sortActive: !sortActive
             }
         case 'MOBILE_FILTER_TOGGLE':
+            const { mobileFilterActive } = state.pizzaList
             return {
                 ...state.pizzaList,
                 sortActive: false,
-                mobileFilterActive: !state.mobileFilterActive
+                mobileFilterActive: !mobileFilterActive
             }
 
         default: return state.pizzaList
