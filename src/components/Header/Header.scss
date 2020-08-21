@@ -10,6 +10,7 @@
 .header{
     width: 100%;
     display: flex;
+    justify-content: space-between;
     height: 137px;
     margin-bottom: 40px;
     border-bottom: 1px rgba(223, 222, 222, 0.616) solid;
@@ -26,9 +27,17 @@
         border-radius: 10px;
     }
     &__welcome{
-        margin-right: 15px;
+        padding: 10px 20px 10px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        width: 230px;
         font-size: 20px;
         &--nick{
+            padding: 0;
+            margin: 0;
             color: orangered;
         }
     }
@@ -38,7 +47,7 @@
     &__logo-block{
         display: flex;
         align-items: center;
-        width: 50%;
+        width: 40%;
         height: inherit;
       
     }
@@ -91,7 +100,7 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        width: 30%;
+        width: 40%;
         margin-left: auto;
  
     }
@@ -144,7 +153,7 @@
 
 @media screen and (max-width:1200px){
     .header__buttons-block{
-        width: 60%;
+        width: 50%;
         justify-content: flex-end;
     }
     .header__login{
@@ -220,6 +229,18 @@
         justify-content: center;
      
     }
+    .header__welcome{
+        margin-bottom: 20px;
+        background-color: rgba(0, 0, 0, 0.76);
+        border-radius: 20px;
+        color: white;
+        &--nick{
+            margin: 0;
+            background-color: transparent;
+            color: orangered;
+        }
+    }
+
 }
 @media screen and (max-width:578px){
     .header{
@@ -230,5 +251,8 @@
 @media screen and (max-width:360px){
     .header__burger{
         right: 20px;
+    }
+    .header__welcome{
+        width: 170px;
     }
 }

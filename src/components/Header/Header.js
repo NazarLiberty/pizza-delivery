@@ -28,10 +28,10 @@ const HeaderContainer = ({
 
     const loginButton = logged ?
         <div className="header__welcome">
-            Ласкаво просимо -
-            <span className=" header__welcome header__welcome--nick">
+            <p>Ласкаво просимо - </p>
+            <p className=" header__welcome header__welcome--nick">
                 {nickName}!
-            </span>
+            </p>
         </div>
         :
         <Link to="/login">
