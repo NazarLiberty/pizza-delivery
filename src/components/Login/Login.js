@@ -1,8 +1,10 @@
 import React from 'react'
 import './Login.scss'
+import { connect } from 'react-redux'
+import { loginRequest } from '../../actions'
 
-const Login = () => {
-    return <div className="container">
+const Login = ({ onLogin }) => {
+    return <div className="login__container">
         <div className="box">
             <input
                 type="checkbox"
@@ -72,7 +74,8 @@ const Login = () => {
                     </label>
                 </div>
 
-                <button className="form__button">
+                <button onClick={() => onLogin('lalka', '123')}
+                    className="form__button">
                     Увійти
                 </button>
 
@@ -84,4 +87,10 @@ const Login = () => {
 
 }
 
-export default Login
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: (name, password) => dispatch(loginRequest(name, password))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login)

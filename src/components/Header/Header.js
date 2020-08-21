@@ -8,7 +8,8 @@ const HeaderContainer = ({
     simpleHeader,
     onToggleMenu,
     mobileMenuActive,
-    total, cartCount
+    total, cartCount,
+    nickName, logged
 }) => {
     let mobileMenuClass = mobileMenuActive ?
         'header__buttons-block header__buttons-block--active' : 'header__buttons-block'
@@ -25,10 +26,27 @@ const HeaderContainer = ({
             </div>
         )
 
+    const loginButton = logged ?
+        <div className="header__welcome">
+            Ласкаво просимо -
+            <span className=" header__welcome header__welcome--nick">
+                {nickName}!
+            </span>
+        </div>
+        :
+        <Link to="/login">
+            <section onClick={() => onToggleMenu()}
+                className="header__login">
+                Увійти
+                </section>
+        </Link>
+
+
     return <Header
         onToggleMenu={onToggleMenu}
         mobileMenuClass={mobileMenuClass}
         cartButtonRender={cartButtonRender}
+        loginButton={loginButton}
     />
 }
 
@@ -36,6 +54,7 @@ const Header = ({
     cartButtonRender,
     onToggleMenu,
     mobileMenuClass,
+    loginButton
 }) => {
     return <header className="header">
         <div className="header__burger"
@@ -58,9 +77,7 @@ const Header = ({
         <section className={mobileMenuClass}>
             <section className="header__close" onClick={() => onToggleMenu()}> X </section>
 
-            <Link to="/login">
-                <section className="header__login">Увійти</section>
-            </Link>
+            {loginButton}
 
             <Link to="/cart">
                 {cartButtonRender}
@@ -70,8 +87,17 @@ const Header = ({
     </header>
 }
 
-const mapStateToProps = ({ shoppingCart: { total, cartCount }, mobileMenuActive }) => {
-    return { mobileMenuActive, total, cartCount }
+const mapStateToProps = ({ shoppingCart:
+    { total, cartCount },
+    mobileMenuActive,
+    loginPage: { nickName, logged } }) => {
+    return {
+        mobileMenuActive,
+        total,
+        cartCount,
+        nickName,
+        logged
+    }
 }
 const mapDispatchToProps = (dispatch) => {
     return {

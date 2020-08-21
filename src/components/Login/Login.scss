@@ -13,18 +13,18 @@ $tablet: 768px;
 }
 
 html {
-  box-sizing: border-box;
-  font-size: 62.5%;
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
+	box-sizing: border-box;
+	font-size: 62.5%;
+  
+	*,
+	*:before,
+	*:after {
+	  box-sizing: inherit;
+	}
   }
-}
+  
 
-
-.container {
+.login__container {
     margin-bottom: 70px;
     margin-top: 100px;
 	display: grid;
@@ -37,12 +37,12 @@ html {
 	display: flex;
 	align-items: center;
 	width: 90%;
-  max-width: 600px;
+  	max-width: 600px;
 	padding: 220px 20px 20px;
-  overflow: hidden;
-  background-color: white;
-  border-radius: 15px;
-  border: 1.5px solid #FFDF8C;
+	overflow: hidden;
+	background-color: white;
+	border-radius: 15px;
+	border: 1.5px solid #FFDF8C;
 	
 	@include breakpoint(tablet) {
 		min-height: 400px;
@@ -72,13 +72,13 @@ html {
   &__image {
     position: absolute;
     top: 0;
-		left: 0;
-    z-index: 1;
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
-		object-position: 0 bottom;
-		transition: .4s ease-in-out;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	object-position: 0 bottom;
+	transition: .4s ease-in-out;
 		
 		@include breakpoint(tablet) {
 			width: 300px;
@@ -103,7 +103,7 @@ html {
     margin-bottom: 20px;
     font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem;
-		font-weight: 700;
+	font-weight: 700;
   }
 
   &--login {

@@ -14,6 +14,7 @@
     margin-bottom: 40px;
     border-bottom: 1px rgba(223, 222, 222, 0.616) solid;
     &__burger{
+        font-size: 19px;
         display: none;
         position: fixed;
         top: 30px;
@@ -23,6 +24,13 @@
         z-index: 99;
         color: white;
         border-radius: 10px;
+    }
+    &__welcome{
+        margin-right: 15px;
+        font-size: 20px;
+        &--nick{
+            color: orangered;
+        }
     }
     &__close{
         display: none;

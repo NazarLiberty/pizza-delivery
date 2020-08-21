@@ -5,8 +5,9 @@ import Header from '../Header/Header'
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux'
 
-const CartPage = ({ emptyCart }) => {
+const CartPage = ({ emptyCart, logged }) => {
 
+    if (!logged) return <Redirect to="/cart-login" />
     if (emptyCart) return <Redirect to="/cart-empty" />
 
     return (
@@ -17,8 +18,9 @@ const CartPage = ({ emptyCart }) => {
     )
 }
 
-const mapStateToProps = ({ shoppingCart: { cartPizzas } }) => {
+const mapStateToProps = ({ loginPage: { logged }, shoppingCart: { cartPizzas } }) => {
     return {
+        logged,
         emptyCart: cartPizzas.length === 0
     }
 }

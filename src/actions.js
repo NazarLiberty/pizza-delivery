@@ -101,6 +101,16 @@ const toggleAddAnimation = (id) => {
         payload: id,
     }
 }
+
+const loginRequest = (name, password) => {
+    return {
+        type: 'LOGIN_REQUEST',
+        payload: {
+            name,
+            password
+        }
+    }
+}
 export {
     fetchRequest,
     fetchPizzas,
@@ -118,4 +128,5 @@ export {
     deletePizza,
     clearCart,
     toggleAddAnimation,
+    loginRequest,
 }

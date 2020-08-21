@@ -1,8 +1,16 @@
 import updatePizzaList from './pizza-list'
 import updateShoppingCart from './shopping-cart'
+import updateLoginPage from './login-page'
 
 const initState = {
+
+    loginPage: {
+        logged: true,
+        nickName: 'babak',
+        password: '123321'
+    },
     mobileMenuActive: false,
+
     shoppingCart: {
         cartPizzas: [],
         cartCount: 0,
@@ -26,6 +34,7 @@ const initState = {
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
+
         case 'MOBILE_MENU_TOGGLE':
             return {
                 ...state,
@@ -35,7 +44,8 @@ const reducer = (state = initState, action) => {
             return {
                 ...state,
                 pizzaList: updatePizzaList(state, action),
-                shoppingCart: updateShoppingCart(state, action)
+                shoppingCart: updateShoppingCart(state, action),
+                loginPage: updateLoginPage(state, action)
             }
     }
 }
