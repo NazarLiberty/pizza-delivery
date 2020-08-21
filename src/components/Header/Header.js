@@ -45,7 +45,7 @@ const Header = ({
 
 
         <section className="header__logo-block">
-            <img src="./logo.svg" className="header__logo" />
+            <img src="./logo.svg" className="header__logo" alt="logo" />
             <Link to="/">
                 <section className="header__text-block">
                     <h1 className="header__title">Pizza Delivery</h1>
@@ -57,7 +57,10 @@ const Header = ({
 
         <section className={mobileMenuClass}>
             <section className="header__close" onClick={() => onToggleMenu()}> X </section>
-            <section className="header__login">Увійти</section>
+
+            <Link to="/login">
+                <section className="header__login">Увійти</section>
+            </Link>
 
             <Link to="/cart">
                 {cartButtonRender}

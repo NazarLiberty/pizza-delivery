@@ -9,7 +9,8 @@ const changeThicknessType = (state, id, type) => {
                 ...pizza,
                 totalPrice: price + markup[type] + markup[size],
                 settings: { type: type, size: size },
-                id: newId
+                id: newId,
+                animation: false,
             }
         }
         return pizza
@@ -27,7 +28,8 @@ const changeSizeSettings = (state, id, size) => {
                 ...pizza,
                 totalPrice: price + markup[type] + markup[size],
                 settings: { type: type, size: size },
-                id: newId
+                id: newId,
+                animation: false,
             }
         }
         return pizza
@@ -43,6 +45,7 @@ const filterItems = (listToFilter, filter) => {
             ...item,
             id: newId,
             initialId: id,
+            animation: false,
         }
     })
     if (filter === 'all') return uniquePizzaId
@@ -135,6 +138,20 @@ const updatePizzaList = (state, action) => {
                 mobileFilterActive: !mobileFilterActive
             }
 
+        case 'ANIMATION_PIZZA_TOGGLE':
+            const currentPizzasList = state.pizzaList.filterPizzas
+            const pizzaIdToAnimate = action.payload
+            const newListToAnimate = currentPizzasList.map((item) => {
+                if (pizzaIdToAnimate === item.id) return {
+                    ...item,
+                    animation: true,
+                }
+                return item
+            })
+            return {
+                ...state.pizzaList,
+                filterPizzas: newListToAnimate
+            }
         default: return state.pizzaList
     }
 }

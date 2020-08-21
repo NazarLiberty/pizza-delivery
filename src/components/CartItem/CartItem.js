@@ -29,7 +29,7 @@ const CartItem = ({
     return (
         <div className="cart-item">
             <div className="cart-item__info-block">
-                <img src={img} className="cart-item__img" />
+                <img src={img} className="cart-item__img" alt="pizza" />
                 <div className="cart-item__info">
                     <p className="cart-page__text">{name}</p>
                     <p className="cart-page__text cart-page__text--small_gray">

@@ -5,22 +5,15 @@ import { connect } from 'react-redux'
 import Loader from '../Loader/Loader'
 import PizzaItem from '../PizzaItem/PizzaItemContainer'
 import PizzaService from '../../pizza-service'
-import { fetchPizzas, fetchError, fetchRequest, toggleMenuWindow } from '../../actions'
+import { fetchPizzas, fetchError, fetchRequest } from '../../actions'
 
 
 const pizzaService = new PizzaService()
 
 const renderPizzas = (pizzas) => {
     return pizzas.map((pizza) => {
-        return <PizzaItem
-            name={pizza.name}
-            price={pizza.totalPrice}
-            img={pizza.img}
-            key={pizza.id}
-            id={pizza.id}
-            thickness={pizza.settings.type}
-            size={pizza.settings.size}
-            initialId={pizza.initialId}
+        return <PizzaItem key={pizza.id}
+            {...pizza}
         />
     })
 }
@@ -32,6 +25,13 @@ const PizzaList = ({ pizzas,
     fetchError,
     loader, }) => {
 
+    useEffect(() => {
+        fetchRequest()
+        pizzaService.getPizzas()
+            .then((data) => pizzasLoaded(data))
+            .catch((err) => fetchError(err))
+    }, [filter, sort, fetchRequest, pizzasLoaded, fetchError])
+
     switch (filter) {
         case 'all': filter = 'Всі'; break;
         case 'meat': filter = "М'ясні"; break;
@@ -40,14 +40,6 @@ const PizzaList = ({ pizzas,
         default:
             break;
     }
-
-    useEffect(() => {
-        fetchRequest()
-        pizzaService.getPizzas()
-            .then((data) => pizzasLoaded(data))
-            .catch((err) => fetchError(err))
-    }, [filter, sort])
-
     if (loader) return <Loader />
 
     return <main className="pizza-list__container">

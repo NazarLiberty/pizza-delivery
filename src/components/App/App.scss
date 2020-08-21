@@ -15,9 +15,11 @@ body{
   background-color: #FFDF8C;
 }
 .wrapper{
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
-  padding-right: 38px;
-  padding-left: 77px;
+  padding-right: 50px;
+  padding-left: 50px;
   margin: auto;
   width: 1200px;
   background-color: #fff;

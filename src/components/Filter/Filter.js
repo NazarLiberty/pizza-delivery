@@ -18,7 +18,7 @@ const Filter = ({ filterList, sortList,
                 {filterList}
             </ul>
             <section className="filter__sort " onClick={onToggleSort}>
-                <img src="./sort-arrow.svg" className={arrowClass} />
+                <img src="./sort-arrow.svg" className={arrowClass} alt="arrow" />
                 <p className="filter__sort-text">
                     Сортувати за:
                 <span className="filter__sort-type" > {currentSort}</span></p>

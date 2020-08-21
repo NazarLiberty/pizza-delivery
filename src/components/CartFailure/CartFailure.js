@@ -18,7 +18,7 @@ const CartFailure = ({ logout }) => {
         <p className="cart-failure__sub-title">
             {subtitle}
         </p>
-        <img src="empty-cart.png" className="cart-failure__img" />
+        <img src="empty-cart.png" className="cart-failure__img" alt="empty-cart" />
 
         <Link to="/">
             <button className="cart-failure__back">Повернутися назад</button>

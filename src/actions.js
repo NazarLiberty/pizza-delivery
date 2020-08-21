@@ -95,6 +95,12 @@ const clearCart = () => {
         type: 'CART_CLEAR'
     }
 }
+const toggleAddAnimation = (id) => {
+    return {
+        type: 'ANIMATION_PIZZA_TOGGLE',
+        payload: id,
+    }
+}
 export {
     fetchRequest,
     fetchPizzas,
@@ -111,4 +117,5 @@ export {
     decreasePizza,
     deletePizza,
     clearCart,
+    toggleAddAnimation,
 }

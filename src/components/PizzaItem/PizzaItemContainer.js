@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useRef } from 'react'
 import './PizzaItem.scss'
 import PizzaItem from './PizzaItem'
 
 import { connect } from 'react-redux'
-import { choosePizzaType, choosePizzaSize, addPizzaToCart } from '../../actions'
+import { choosePizzaType, choosePizzaSize, addPizzaToCart, toggleAddAnimation } from '../../actions'
 
 
-const PizzaItemContainer = ({ name, id,
-    price, img, thickness = 'thin',
-    size = 'small', onChooseType,
-    onChooseSize, onCartPizza,
-    cartPizzasNameList }) => {
+const PizzaItemContainer = ({
+    name, id,
+    totalPrice, img,
+    settings: { type: thickness = 'thin',
+        size = 'small' },
+    onChooseType,
+    onChooseSize,
+    onCartPizza,
+    cartPizzasNameList,
+    animation }) => {
 
+    const pizzaItemImage = useRef(null)
 
     const getPizzaCount = (cartPizzasNameList, pizzaName) => {
         const currentPizzasCount = cartPizzasNameList.filter((name) => name === pizzaName)
@@ -55,14 +61,19 @@ const PizzaItemContainer = ({ name, id,
     const renderCount = count > 0 ?
         <p className="pizza-item__order-count">{count}</p> : null
 
+    const pizzaImageClass = animation ?
+        'pizza-item__image pizza-item__image--animated' : 'pizza-item__image'
+
     return <PizzaItem name={name}
-        price={price}
+        price={totalPrice}
         img={img}
         thicknessSettingsRender={thicknessSettings(thickness)}
         sizeSettingsRender={sizeSettings(size)}
         onCartPizza={onCartPizza}
         id={id}
         renderCount={renderCount}
+        pizzaItemImage={pizzaItemImage}
+        pizzaImageClass={pizzaImageClass}
     />
 }
 
@@ -75,6 +86,7 @@ const mapDispatchToProps = (dispatch) => {
         onChooseType: (id, type, name) => dispatch(choosePizzaType(id, type, name)),
         onChooseSize: (id, size, name) => dispatch(choosePizzaSize(id, size, name)),
         onCartPizza: (id) => {
+            dispatch(toggleAddAnimation(id))
             dispatch(addPizzaToCart(id))
         }
     }

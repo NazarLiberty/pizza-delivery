@@ -99,6 +99,7 @@ letter-spacing: 0.5px;
         transform: rotate(0deg);
     }
     &__list{
+        z-index: 2;
         transition: .7s all ease;
         opacity: 0;
         width: 132px;
@@ -158,7 +159,7 @@ letter-spacing: 0.5px;
         padding: 25px 0 15px 0;
     }
     .sort__list{
-        z-index: 15;
+        z-index: 2;
         width: inherit;
         top: 50px;
         text-align: center;
