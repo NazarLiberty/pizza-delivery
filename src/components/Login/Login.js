@@ -74,7 +74,7 @@ const Login = ({ onLogin }) => {
                     </label>
                 </div>
 
-                <button onClick={() => onLogin('lalka', '123')}
+                <button onClick={() => onLogin('testNameBabak123', '123')}
                     className="form__button">
                     Увійти
                 </button>
@@ -89,7 +89,7 @@ const Login = ({ onLogin }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (name, password) => dispatch(loginRequest(name, password))
+        onLogin: (nick, password) => dispatch(loginRequest(nick, password))
     }
 }
 

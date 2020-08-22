@@ -1,7 +1,7 @@
 import React from 'react'
 import './Header.scss'
 import { connect } from 'react-redux'
-import { toggleMenuWindow } from '../../actions'
+import { toggleMenuWindow, logout } from '../../actions'
 import { Link } from 'react-router-dom'
 
 const HeaderContainer = ({
@@ -9,7 +9,8 @@ const HeaderContainer = ({
     onToggleMenu,
     mobileMenuActive,
     total, cartCount,
-    nickName, logged
+    nickName, logged,
+    onLogout,
 }) => {
     let mobileMenuClass = mobileMenuActive ?
         'header__buttons-block header__buttons-block--active' : 'header__buttons-block'
@@ -27,10 +28,14 @@ const HeaderContainer = ({
         )
 
     const loginButton = logged ?
+
         <div className="header__welcome">
             <p>Ласкаво просимо - </p>
             <p className=" header__welcome header__welcome--nick">
                 {nickName}!
+            </p>
+            <p className="header__logout" onClick={() => onLogout()}>
+                Вийти
             </p>
         </div>
         :
@@ -101,7 +106,8 @@ const mapStateToProps = ({ shoppingCart:
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        onToggleMenu: () => dispatch(toggleMenuWindow())
+        onToggleMenu: () => dispatch(toggleMenuWindow()),
+        onLogout: () => dispatch(logout())
     }
 }
 

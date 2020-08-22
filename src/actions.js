@@ -102,13 +102,18 @@ const toggleAddAnimation = (id) => {
     }
 }
 
-const loginRequest = (name, password) => {
+const loginRequest = (nick, password) => {
     return {
         type: 'LOGIN_REQUEST',
         payload: {
-            name,
+            nick,
             password
         }
+    }
+}
+const logout = () => {
+    return {
+        type: 'LOG_OUT'
     }
 }
 export {
@@ -129,4 +134,5 @@ export {
     clearCart,
     toggleAddAnimation,
     loginRequest,
+    logout,
 }
