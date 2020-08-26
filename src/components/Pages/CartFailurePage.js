@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import CartFailure from '../CartFailure/CartFailure'
 import Header from '../Header/Header'
 
-const CartFailurePage = ({ logout, cartIsEmpty, login }) => {
+const CartFailurePage = ({ logout, cartIsEmpty, }) => {
 
     if (!cartIsEmpty) return <Redirect to='/' />
 
