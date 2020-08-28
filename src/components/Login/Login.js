@@ -1,35 +1,41 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import './Login.scss'
 import { connect } from 'react-redux'
-import { loginRequest } from '../../actions'
+import { loginRequest, registerRequest } from '../../actions'
 
 
 
-const LoginContainer = ({ onLogin }) => {
+const LoginContainer = ({ onLogin, onRegisterSubmit }) => {
     const [regName, setRegName] = useState({
+        type: 'name',
         value: '',
         err: false,
     })
     const [regEmail, setRegEmail] = useState({
+        type: 'email',
         value: '',
         err: false,
     })
     const [regPass, setRegPass] = useState({
+        type: 'password',
         value: '',
         err: false,
     })
     const [regConfPass, setRegConfPass] = useState({
+        type: 'passwordConfirm',
         value: '',
         err: false,
     })
     const onRegisterName = (value) => {
         if (value.length >= 3 && value.length < 20) setRegName({
             value: value,
-            err: false
+            err: false,
+            type: 'name'
         })
         else setRegName({
             value: value,
-            err: true
+            err: true,
+            type: 'name'
         })
     }
     const onRegisterEmail = (value) => {
@@ -38,11 +44,13 @@ const LoginContainer = ({ onLogin }) => {
             setRegEmail({
                 value: value,
                 err: false,
+                type: 'email'
             })
         }
         else setRegEmail({
             value: value,
             err: true,
+            type: 'email'
         })
     }
 
@@ -50,29 +58,35 @@ const LoginContainer = ({ onLogin }) => {
         var passRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
         if (value.match(passRegExp)) setRegPass({
             value: value,
-            err: false
+            err: false,
+            type: 'password'
         })
         else setRegPass({
             value: value,
             err: true,
+            type: 'password'
         })
         if (value === regConfPass.value) setRegConfPass({
             value: regConfPass.value,
-            err: false
+            err: false,
+            type: 'passwordConfirm'
         })
         else setRegConfPass({
             value: regConfPass.value,
-            err: true
+            err: true,
+            type: 'passwordConfirm'
         })
     }
     const onRegisterConfPass = (value) => {
         if (value === regPass.value) setRegConfPass({
             value: value,
             err: false,
+            type: 'passwordConfirm',
         })
         else setRegConfPass({
             value: value,
             err: true,
+            type: 'passwordConfirm',
         })
     }
 
@@ -98,7 +112,12 @@ const LoginContainer = ({ onLogin }) => {
         regPassErrClass={regPassErrClass}
         onRegisterPass={onRegisterPass}
         regConfPassErrClass={regConfPassErrClass}
-        onRegisterConfPass={onRegisterConfPass} />
+        onRegisterConfPass={onRegisterConfPass}
+        onRegisterSubmit={onRegisterSubmit}
+        regName={regName}
+        regEmail={regEmail}
+        regPass={regPass}
+        regConfPass={regConfPass} />
 }
 
 const Login = ({ onLogin,
@@ -109,12 +128,15 @@ const Login = ({ onLogin,
     regPassErrClass,
     onRegisterPass,
     regConfPassErrClass,
-    onRegisterConfPass }) => {
+    onRegisterConfPass,
+    onRegisterSubmit,
+    regName, regEmail,
+    regPass, regConfPass }) => {
 
-    const regName = useRef(null)
-    const regEmail = useRef(null)
-    const regPass = useRef(null)
-    const regConfPass = useRef(null)
+    const regNameInput = useRef(null)
+    const regEmailInput = useRef(null)
+    const regPassInput = useRef(null)
+    const regConfPassInput = useRef(null)
 
 
     return <div className="login__container">
@@ -136,12 +158,13 @@ const Login = ({ onLogin,
                     </span>
 
                     <input type="text"
-                        onChange={() => onRegisterName(regName.current.value)}
+                        value={regName.value}
+                        onChange={() => onRegisterName(regNameInput.current.value)}
                         name="user"
                         id="new-user"
                         placeholder="User"
                         className="form__input"
-                        ref={regName} />
+                        ref={regNameInput} />
                     <label className="form__label" htmlFor="new-user">
                         Ім'я
                     </label>
@@ -152,8 +175,9 @@ const Login = ({ onLogin,
                         Не вірний формат адреси
                     </span>
                     <input
-                        ref={regEmail}
-                        onChange={() => onRegisterEmail(regEmail.current.value)}
+                        value={regEmail.value}
+                        ref={regEmailInput}
+                        onChange={() => onRegisterEmail(regEmailInput.current.value)}
                         type="email"
                         name="email"
                         id="email"
@@ -167,8 +191,9 @@ const Login = ({ onLogin,
                         Пароль повинен містити від 6 до 20 символів, цифри, та букви латинниці різних регістрів
                     </span>
                     <input
-                        ref={regPass}
-                        onChange={() => onRegisterPass(regPass.current.value)}
+                        value={regPass.value}
+                        ref={regPassInput}
+                        onChange={() => onRegisterPass(regPassInput.current.value)}
                         type="password"
                         name="password"
                         id="new-user-password"
@@ -182,8 +207,9 @@ const Login = ({ onLogin,
                         Пароль не співпадає
                     </span>
                     <input
-                        ref={regConfPass}
-                        onChange={() => onRegisterConfPass(regConfPass.current.value)}
+                        value={regConfPass.value}
+                        ref={regConfPassInput}
+                        onChange={() => onRegisterConfPass(regConfPassInput.current.value)}
                         type="password"
                         name="password"
                         id="confirm-password"
@@ -192,8 +218,8 @@ const Login = ({ onLogin,
                     <label className="form__label" htmlFor="confirm-password">Підтвердження паролю</label>
                 </div>
 
-                <button onClick={()=> onRegister() }
-                className="form__button">Зареєструватися</button>
+                <button onClick={() => onRegisterSubmit(regName, regEmail, regPass, regConfPass)}
+                    className="form__button">Зареєструватися</button>
 
                 <p className="form__text">Вже зареєстровані? <label htmlFor="toggle" className="form__link">Увійти в аккаунт!</label> </p>
             </div>
@@ -240,7 +266,10 @@ const Login = ({ onLogin,
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (nick, password) => dispatch(loginRequest(nick, password))
+        onLogin: (nick, password) => dispatch(loginRequest(nick, password)),
+        onRegisterSubmit: (name, email, password, confirmPassword) => dispatch(
+            registerRequest(name, email, password, confirmPassword)
+        )
     }
 }
 

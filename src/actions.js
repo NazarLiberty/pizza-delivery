@@ -116,6 +116,17 @@ const logout = () => {
         type: 'LOG_OUT'
     }
 }
+const registerRequest = (name, email, password, confirmPassword) => {
+    return {
+        type: 'REGISTER_REQUEST',
+        payload: {
+            name,
+            email,
+            password,
+            confirmPassword,
+        }
+    }
+}
 export {
     fetchRequest,
     fetchPizzas,
@@ -135,4 +146,5 @@ export {
     toggleAddAnimation,
     loginRequest,
     logout,
+    registerRequest,
 }

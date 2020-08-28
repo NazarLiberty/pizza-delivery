@@ -18,6 +18,37 @@ const updateLoginPage = (state, action) => {
                 nickName: '',
             }
         }
+        case 'REGISTER_REQUEST': {
+            const validationContainer = []
+            const registerContainer = {}
+
+            for (let key in action.payload) {
+
+                let type = action.payload[key].type
+                let errorStatus = action.payload[key].err
+                let value = action.payload[key].value
+
+                if (!errorStatus && value) {
+                    validationContainer.push(true)
+                    if (type == 'passwordConfirm') continue
+                    registerContainer[type] = value
+
+                }
+                else validationContainer.push(false)
+            }
+
+            let validationIsCorrect = !validationContainer.includes(false)
+
+            if (validationIsCorrect) {
+                const newUser = JSON.stringify(registerContainer)
+                localStorage.setItem('user', newUser)
+                alert(`Welcome to the party, ${registerContainer.name}!
+confirm mail was sent to your box ${registerContainer.email} !
+            `)
+
+            }
+
+        }
         default:
             return state.loginPage
     }

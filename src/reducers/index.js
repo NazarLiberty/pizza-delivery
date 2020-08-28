@@ -5,7 +5,7 @@ import updateLoginPage from './login-page'
 const initState = {
 
     loginPage: {
-        logged: true,
+        logged: false,
         nickName: 'babak',
         password: '123321'
     },
