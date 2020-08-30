@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../Header/Header'
-import Login from '../Login/Login'
+import Login from '../Login/LoginContainer'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router'
 
