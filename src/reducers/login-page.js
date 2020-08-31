@@ -1,7 +1,13 @@
-const setNewUser = (registerContainer, validationIsCorrect) => {
-    if (isNameBusy(registerContainer)) return alert('NAME IS BUSIED SUKA')
-    if (isEmailBusy(registerContainer)) return alert('EMAIL IS BUSIED NAH')
+const setNewUser = (registerContainer, validationIsCorrect, state) => {
     if (validationIsCorrect) {
+        if (isNameBusy(registerContainer)) return {
+            ...state.loginPage,
+            warningModal: { type: 'name' }
+        }
+        if (isEmailBusy(registerContainer)) return {
+            ...state.loginPage,
+            warningModal: { type: 'email' }
+        }
         if (localStorage.userList) {
             const usersList = JSON.parse(localStorage.userList)
             usersList.push(registerContainer)
@@ -13,21 +19,52 @@ const setNewUser = (registerContainer, validationIsCorrect) => {
             localStorage.setItem('userList', newUser)
         }
 
-        return alert(`Welcome to the party, ${registerContainer.name}!
-confirm mail was sent to your box ${registerContainer.email} !
-`)
+        return {
+            ...state.loginPage,
+            warningModal: { type: 'succes', payload: registerContainer }
+        }
     }
-    else return alert('Enter all fields correctly please nah')
+    else return {
+        ...state.loginPage,
+        warningModal: { type: 'form' }
+    }
 }
 
 const isNameBusy = (registerContainer) => {
-    const usersList = JSON.parse(localStorage.userList)
-    return usersList.find(({ name }) => registerContainer.name === name)
+    if (localStorage.userList) {
+        const usersList = JSON.parse(localStorage.userList)
+        return usersList.find(({ name }) => registerContainer.name.toUpperCase() === name.toUpperCase())
+    }
+    else return false
 }
 
 const isEmailBusy = (registerContainer) => {
+    if (localStorage.userList) {
+        const usersList = JSON.parse(localStorage.userList)
+        return usersList.find(({ email }) => registerContainer.email.toUpperCase() === email.toUpperCase())
+    }
+    else return false
+}
+
+const loginRequest = (loginName, loginPassword, state) => {
     const usersList = JSON.parse(localStorage.userList)
-    return usersList.find(({ email }) => registerContainer.email === email)
+    const userToLogin = usersList.find(({ name, password }) =>
+        name.toUpperCase() === loginName.toUpperCase() && password === loginPassword)
+    console.log(userToLogin)
+    if (userToLogin) {
+        return {
+            ...state.loginPage,
+            logged: true,
+            name: userToLogin.name,
+            loginErr: false,
+        }
+    }
+    else return {
+        ...state.loginPage,
+        logged: false,
+        name: null,
+        loginErr: true,
+    }
 }
 
 
@@ -35,20 +72,24 @@ const isEmailBusy = (registerContainer) => {
 const updateLoginPage = (state, action) => {
     switch (action.type) {
         case 'LOGIN_REQUEST': {
-            return {
-                ...state.loginPage,
-                logged: true,
-                password: action.payload.password,
-                nickName: action.payload.nick,
+            const { name: loginName, password: loginPassword } = action.payload
+
+            if (localStorage.userList) {
+                return loginRequest(loginName, loginPassword, state)
             }
+            else return {
+                ...state.loginPage,
+                loginErr: true,
+            }
+
         }
         case 'LOG_OUT': {
 
             return {
                 ...state.loginPage,
+                loginErr: false,
                 logged: false,
-                password: '',
-                nickName: '',
+                name: null,
             }
         }
         case 'REGISTER_REQUEST': {
@@ -71,8 +112,14 @@ const updateLoginPage = (state, action) => {
             }
             let validationIsCorrect = !validationContainer.includes(false)
 
-            setNewUser(registerContainer, validationIsCorrect)
-            return state.loginPage
+            return setNewUser(registerContainer, validationIsCorrect, state)
+
+        }
+        case 'WARNING_MODAL_REMOVE': {
+            return {
+                ...state.loginPage,
+                warningModal: {},
+            }
         }
         default:
             return state.loginPage

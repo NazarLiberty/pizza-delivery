@@ -9,7 +9,7 @@ const HeaderContainer = ({
     onToggleMenu,
     mobileMenuActive,
     total, cartCount,
-    nickName, logged,
+    name, logged,
     onLogout,
 }) => {
     let mobileMenuClass = mobileMenuActive ?
@@ -32,7 +32,7 @@ const HeaderContainer = ({
         <div className="header__welcome">
             <p>Ласкаво просимо - </p>
             <p className=" header__welcome header__welcome--nick">
-                {nickName}!
+                {name}!
             </p>
             <p className="header__logout" onClick={() => onLogout()}>
                 Вийти
@@ -64,7 +64,7 @@ const Header = ({
     return <header className="header">
         <div className="header__burger"
             onClick={() => onToggleMenu()}>
-            XXX
+            <i className="fab fa-elementor"></i>
         </div>
 
 
@@ -80,7 +80,9 @@ const Header = ({
 
 
         <section className={mobileMenuClass}>
-            <section className="header__close" onClick={() => onToggleMenu()}> X </section>
+            <section className="header__close" onClick={() => onToggleMenu()}>
+                X
+            </section>
 
             {loginButton}
 
@@ -92,15 +94,17 @@ const Header = ({
     </header>
 }
 
-const mapStateToProps = ({ shoppingCart:
+const mapStateToProps = ({
+    shoppingCart:
     { total, cartCount },
     mobileMenuActive,
-    loginPage: { nickName, logged } }) => {
+    loginPage:
+    { name, logged } }) => {
     return {
         mobileMenuActive,
         total,
         cartCount,
-        nickName,
+        name,
         logged
     }
 }

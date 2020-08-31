@@ -6,7 +6,8 @@ import { loginRequest, registerRequest } from '../../actions'
 
 
 
-const LoginContainer = ({ onLogin, onRegisterSubmit }) => {
+const LoginContainer = ({ onLogin, onRegisterSubmit, loginErr }) => {
+
     const [regName, setRegName] = useState({
         value: '',
         err: false,
@@ -24,7 +25,7 @@ const LoginContainer = ({ onLogin, onRegisterSubmit }) => {
         err: false,
     })
     const onRegisterName = (value) => {
-        if (value.length >= 3 && value.length < 20) setRegName({
+        if (value.length >= 3 && value.length < 14) setRegName({
             value: value,
             err: false,
         })
@@ -77,6 +78,8 @@ const LoginContainer = ({ onLogin, onRegisterSubmit }) => {
         })
     }
 
+    const logErrClass = loginErr ?
+        'log__err log__err--active' : 'log__err'
 
     const regNameErrClass = regName.err ?
         'reg__name-err reg__name-err--active' : 'reg__name-err'
@@ -92,6 +95,7 @@ const LoginContainer = ({ onLogin, onRegisterSubmit }) => {
 
 
     return <Login onLogin={onLogin}
+        logErrClass={logErrClass}
         onRegisterName={onRegisterName}
         regNameErrClass={regNameErrClass}
         regEmailErrClass={regEmailErrClass}
@@ -109,11 +113,17 @@ const LoginContainer = ({ onLogin, onRegisterSubmit }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogin: (nick, password) => dispatch(loginRequest(nick, password)),
+        onLogin: (name, password) => dispatch(loginRequest(name, password)),
         onRegisterSubmit: (name, email, password, confirmPassword) => dispatch(
             registerRequest(name, email, password, confirmPassword)
         )
     }
 }
 
-export default connect(null, mapDispatchToProps)(LoginContainer)
+const mapStateToProps = ({ loginPage: { loginErr } }) => {
+    return {
+        loginErr
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)

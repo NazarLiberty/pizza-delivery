@@ -6,8 +6,9 @@ const initState = {
 
     loginPage: {
         logged: false,
-        nickName: 'babak',
-        password: '123321'
+        name: null,
+        warningModal: {},
+        loginErr: false,
     },
     mobileMenuActive: false,
 

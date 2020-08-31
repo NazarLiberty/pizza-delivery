@@ -15,15 +15,13 @@
     margin-bottom: 40px;
     border-bottom: 1px rgba(223, 222, 222, 0.616) solid;
     &__burger{
-        font-size: 19px;
+        font-size: 52px;
         display: none;
         position: fixed;
         top: 30px;
         right: 40px;
-        background-color: rgba(0, 0, 0, 0.699);
-        padding: 9px;
         z-index: 99;
-        color: white;
+        color: black;
         border-radius: 10px;
     }
     &__welcome{
@@ -179,8 +177,8 @@
     .header__close{
         display: block;
         position: absolute;
-        top: 15px;
-        right: 20px;
+        top: 25px;
+        right: 25px;
         font-size: 25px;
         font-weight: bold;
         font-family: monospace;

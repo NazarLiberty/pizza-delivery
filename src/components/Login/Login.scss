@@ -227,3 +227,13 @@ html {
 		}
 	}
 }
+.log__err{
+	font-size: 13px;
+	position: absolute;
+	top: -100%;
+	display: none;
+	color: red;
+		&--active{
+			display: inline;
+		}
+}

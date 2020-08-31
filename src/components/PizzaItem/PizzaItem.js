@@ -2,6 +2,7 @@ import React from 'react'
 import './PizzaItem.scss'
 
 const PizzaItem = ({ name,
+    logged,
     price, img,
     thicknessSettingsRender,
     sizeSettingsRender, onCartPizza,
@@ -24,7 +25,7 @@ const PizzaItem = ({ name,
         </div>
         <div className="pizza-item__order">
             <p className="pizza-item__price pizza-item__text pizza-item__text--price">{price} ₴</p>
-            <button onClick={() => onCartPizza(id)}
+            <button onClick={() => onCartPizza(id, logged)}
                 className="pizza-item__order-button">
                 <img src="./plus.png" className="pizza-item__plus" alt="plus" />
                 <p className="pizza-item__order-text">

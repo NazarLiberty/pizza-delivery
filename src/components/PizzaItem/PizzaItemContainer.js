@@ -4,9 +4,11 @@ import PizzaItem from './PizzaItem'
 
 import { connect } from 'react-redux'
 import { choosePizzaType, choosePizzaSize, addPizzaToCart, toggleAddAnimation } from '../../actions'
+import { Redirect } from 'react-router'
 
 
 const PizzaItemContainer = ({
+    logged,
     name, id,
     totalPrice, img,
     settings: { type: thickness = 'thin',
@@ -65,6 +67,7 @@ const PizzaItemContainer = ({
         'pizza-item__image pizza-item__image--animated' : 'pizza-item__image'
 
     return <PizzaItem name={name}
+        logged={logged}
         price={totalPrice}
         img={img}
         thicknessSettingsRender={thicknessSettings(thickness)}
@@ -78,16 +81,26 @@ const PizzaItemContainer = ({
 }
 
 
-const mapStateToProps = ({ shoppingCart: { cartPizzasKind: cartPizzasNameList } }) => {
-    return { cartPizzasNameList }
+const mapStateToProps = ({ shoppingCart: { cartPizzasKind: cartPizzasNameList },
+    loginPage: { logged } }) => {
+    return {
+        cartPizzasNameList,
+        logged
+    }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         onChooseType: (id, type, name) => dispatch(choosePizzaType(id, type, name)),
         onChooseSize: (id, size, name) => dispatch(choosePizzaSize(id, size, name)),
-        onCartPizza: (id) => {
-            dispatch(toggleAddAnimation(id))
-            dispatch(addPizzaToCart(id))
+        onCartPizza: (id, logged) => {
+            if (logged) {
+                dispatch(toggleAddAnimation(id))
+                dispatch(addPizzaToCart(id))
+            }
+            else {
+                console.log('here')
+                return <Redirect to="/cart-login" />
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 import React, { useRef } from 'react'
 import './Login.scss'
-import LoginModal from '../LoginModal/LoginModal'
+import LoginModal from '../LoginModal/LoginModalContainer'
 
 
 const Login = ({ onLogin,
+    logErrClass,
     regNameErrClass,
     onRegisterName,
     regEmailErrClass,
@@ -20,6 +21,8 @@ const Login = ({ onLogin,
     const regEmailInput = useRef(null)
     const regPassInput = useRef(null)
     const regConfPassInput = useRef(null)
+    const logName = useRef(null)
+    const logPass = useRef(null)
 
 
     return <div className="login__container">
@@ -38,7 +41,7 @@ const Login = ({ onLogin,
                 <div className="form__helper">
 
                     <span className={regNameErrClass}>
-                        Ім'я може містити від 3 до 19 символів
+                        Ім'я може містити від 3 до 13 символів
                     </span>
 
                     <input type="text"
@@ -112,7 +115,9 @@ const Login = ({ onLogin,
                 <h1 className="form__title">Вхід</h1>
 
                 <div className="form__helper">
+
                     <input
+                        ref={logName}
                         type="text"
                         name="user"
                         id="user"
@@ -121,10 +126,15 @@ const Login = ({ onLogin,
                     <label className="form__label" htmlFor="user">
                         Ім'я
                     </label>
+
                 </div>
 
                 <div className="form__helper">
+                    <span className={logErrClass}>
+                        Ім'я або пароль не правильнi
+                    </span>
                     <input
+                        ref={logPass}
                         type="password"
                         name="password"
                         id="password"
@@ -135,7 +145,9 @@ const Login = ({ onLogin,
                     </label>
                 </div>
 
-                <button onClick={() => onLogin('testNameBabak123', '123')}
+                <button onClick={() =>
+                    onLogin(logName.current.value,
+                        logPass.current.value)}
                     className="form__button">
                     Увійти
                 </button>

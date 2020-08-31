@@ -102,11 +102,11 @@ const toggleAddAnimation = (id) => {
     }
 }
 
-const loginRequest = (nick, password) => {
+const loginRequest = (name, password) => {
     return {
         type: 'LOGIN_REQUEST',
         payload: {
-            nick,
+            name,
             password
         }
     }
@@ -125,6 +125,11 @@ const registerRequest = (name, email, password, confirmPassword) => {
             password,
             confirmPassword,
         }
+    }
+}
+const warningModalRemove = () => {
+    return {
+        type: 'WARNING_MODAL_REMOVE'
     }
 }
 export {
@@ -147,4 +152,5 @@ export {
     loginRequest,
     logout,
     registerRequest,
+    warningModalRemove,
 }
