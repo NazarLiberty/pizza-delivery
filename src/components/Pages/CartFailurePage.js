@@ -7,7 +7,6 @@ import Header from '../Header/Header'
 
 const CartFailurePage = ({ logout, cartIsEmpty, }) => {
 
-    if (!cartIsEmpty) return <Redirect to='/' />
 
 
     return (
@@ -18,9 +17,8 @@ const CartFailurePage = ({ logout, cartIsEmpty, }) => {
     )
 }
 
-const mapStateToProps = ({ login, shoppingCart: { cartPizzas } }) => {
+const mapStateToProps = ({ shoppingCart: { cartPizzas } }) => {
     return {
-        login,
         cartIsEmpty: cartPizzas.length === 0
     }
 }

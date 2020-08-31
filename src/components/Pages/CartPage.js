@@ -9,6 +9,7 @@ const CartPage = ({ emptyCart, logged }) => {
 
     if (!logged) return <Redirect to="/cart-login" />
     if (emptyCart) return <Redirect to="/cart-empty" />
+    if (!logged && !emptyCart) return <Redirect to="/cart-login" />
 
     return (
         <>

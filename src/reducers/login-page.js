@@ -50,7 +50,6 @@ const loginRequest = (loginName, loginPassword, state) => {
     const usersList = JSON.parse(localStorage.userList)
     const userToLogin = usersList.find(({ name, password }) =>
         name.toUpperCase() === loginName.toUpperCase() && password === loginPassword)
-    console.log(userToLogin)
     if (userToLogin) {
         return {
             ...state.loginPage,

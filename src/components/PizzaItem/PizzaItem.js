@@ -2,14 +2,14 @@ import React from 'react'
 import './PizzaItem.scss'
 
 const PizzaItem = ({ name,
-    logged,
+    addToCartButtonState,
     price, img,
     thicknessSettingsRender,
-    sizeSettingsRender, onCartPizza,
+    sizeSettingsRender,
     id, renderCount,
     pizzaItemImage,
     pizzaImageClass }) => {
-
+    const buttonElement = addToCartButtonState(id, renderCount)
     return <section className="pizza-item__container">
         <div className="pizza-item__image-block">
             <img src={img} className="pizza-item__image-static" alt="pizza" />
@@ -25,14 +25,7 @@ const PizzaItem = ({ name,
         </div>
         <div className="pizza-item__order">
             <p className="pizza-item__price pizza-item__text pizza-item__text--price">{price} ₴</p>
-            <button onClick={() => onCartPizza(id, logged)}
-                className="pizza-item__order-button">
-                <img src="./plus.png" className="pizza-item__plus" alt="plus" />
-                <p className="pizza-item__order-text">
-                    Добавити
-                </p>
-                {renderCount}
-            </button>
+            {buttonElement}
         </div>
     </section>
 }

@@ -4,7 +4,7 @@ import PizzaItem from './PizzaItem'
 
 import { connect } from 'react-redux'
 import { choosePizzaType, choosePizzaSize, addPizzaToCart, toggleAddAnimation } from '../../actions'
-import { Redirect } from 'react-router'
+import { Link } from 'react-router-dom'
 
 
 const PizzaItemContainer = ({
@@ -25,6 +25,30 @@ const PizzaItemContainer = ({
         const currentPizzasCount = cartPizzasNameList.filter((name) => name === pizzaName)
         if (currentPizzasCount.length > 0) return currentPizzasCount.length
         return null
+    }
+
+    const addToCartButtonState = (id, renderCount) => {
+        if (logged) return (
+            <button onClick={() => onCartPizza(id)}
+                className="pizza-item__order-button">
+                <img src="./plus.png" className="pizza-item__plus" alt="plus" />
+                <p className="pizza-item__order-text">
+                    Добавити
+                </p>
+                {renderCount}
+            </button>
+        )
+        else return (
+            <Link to="/cart-login">
+                <button className="pizza-item__order-button">
+                    <img src="./plus.png" className="pizza-item__plus" alt="plus" />
+                    <p className="pizza-item__order-text">
+                        Добавити
+                </p>
+                    {renderCount}
+                </button>
+            </Link>
+        )
     }
 
     const thicknessSettings = (thickness) => {
@@ -67,7 +91,7 @@ const PizzaItemContainer = ({
         'pizza-item__image pizza-item__image--animated' : 'pizza-item__image'
 
     return <PizzaItem name={name}
-        logged={logged}
+        addToCartButtonState={addToCartButtonState}
         price={totalPrice}
         img={img}
         thicknessSettingsRender={thicknessSettings(thickness)}
@@ -81,8 +105,12 @@ const PizzaItemContainer = ({
 }
 
 
-const mapStateToProps = ({ shoppingCart: { cartPizzasKind: cartPizzasNameList },
-    loginPage: { logged } }) => {
+const mapStateToProps = ({
+    shoppingCart:
+    { cartPizzasKind: cartPizzasNameList },
+    loginPage:
+    { logged }
+}) => {
     return {
         cartPizzasNameList,
         logged
@@ -92,15 +120,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onChooseType: (id, type, name) => dispatch(choosePizzaType(id, type, name)),
         onChooseSize: (id, size, name) => dispatch(choosePizzaSize(id, size, name)),
-        onCartPizza: (id, logged) => {
-            if (logged) {
-                dispatch(toggleAddAnimation(id))
-                dispatch(addPizzaToCart(id))
-            }
-            else {
-                console.log('here')
-                return <Redirect to="/cart-login" />
-            }
+        onCartPizza: (id) => {
+            dispatch(toggleAddAnimation(id))
+            dispatch(addPizzaToCart(id))
         }
     }
 }
