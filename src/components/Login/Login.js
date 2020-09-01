@@ -17,13 +17,8 @@ const Login = ({ onLogin,
     regName, regEmail,
     regPass, regConfPass }) => {
 
-    const regNameInput = useRef(null)
-    const regEmailInput = useRef(null)
-    const regPassInput = useRef(null)
-    const regConfPassInput = useRef(null)
     const logName = useRef(null)
     const logPass = useRef(null)
-
 
     return <div className="login__container">
         <LoginModal />
@@ -33,7 +28,9 @@ const Login = ({ onLogin,
                 id="toggle"
                 className="box__toggle"
                 hidden />
-            <img src="https://source.unsplash.com/zv3ckJKftC4/300x400" alt="by Autumn Studio" className="box__image" />
+            <img src="https://source.unsplash.com/zv3ckJKftC4/300x400"
+                alt="by Autumn Studio"
+                className="box__image" />
 
             <div className="form form--register" action="">
                 <h1 className="form__title">Реєстрація</h1>
@@ -46,12 +43,12 @@ const Login = ({ onLogin,
 
                     <input type="text"
                         value={regName.value}
-                        onChange={() => onRegisterName(regNameInput.current.value)}
+                        onChange={(e) => onRegisterName(e.target.value)}
                         name="user"
                         id="new-user"
                         placeholder="User"
                         className="form__input"
-                        ref={regNameInput} />
+                    />
                     <label className="form__label" htmlFor="new-user">
                         Ім'я
                     </label>
@@ -63,8 +60,7 @@ const Login = ({ onLogin,
                     </span>
                     <input
                         value={regEmail.value}
-                        ref={regEmailInput}
-                        onChange={() => onRegisterEmail(regEmailInput.current.value)}
+                        onChange={(e) => onRegisterEmail(e.target.value)}
                         type="email"
                         name="email"
                         id="email"
@@ -79,8 +75,7 @@ const Login = ({ onLogin,
                     </span>
                     <input
                         value={regPass.value}
-                        ref={regPassInput}
-                        onChange={() => onRegisterPass(regPassInput.current.value)}
+                        onChange={(e) => onRegisterPass(e.target.value)}
                         type="password"
                         name="password"
                         id="new-user-password"
@@ -95,8 +90,7 @@ const Login = ({ onLogin,
                     </span>
                     <input
                         value={regConfPass.value}
-                        ref={regConfPassInput}
-                        onChange={() => onRegisterConfPass(regConfPassInput.current.value)}
+                        onChange={(e) => onRegisterConfPass(e.target.value)}
                         type="password"
                         name="password"
                         id="confirm-password"
