@@ -1,5 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Presentation link:
+[Pizza-Delivery](https://nazarliberty.github.io/pizza-delivery/build/index.html#/)
+
 ## What is Pizza Delivery?
 
 Pizza Delivery is a full responsive web-application site, which let you order a pizza.
